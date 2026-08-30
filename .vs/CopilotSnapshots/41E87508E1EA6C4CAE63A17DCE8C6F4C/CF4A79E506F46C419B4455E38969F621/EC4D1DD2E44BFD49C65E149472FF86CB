@@ -1,0 +1,180 @@
+﻿generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  DOCTOR
+  NURSE
+  RECEPTIONIST
+  PATIENT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum MedicalRecordStatus {
+  OPEN
+  CLOSED
+}
+
+enum PrescriptionStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(PATIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctor  Doctor?
+  patient Patient?
+}
+
+model Department {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  doctors      Doctor[]
+  patients     Patient[]
+  appointments Appointment[]
+}
+
+model Doctor {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  departmentId   String
+  name           String
+  specialization String
+  licenseNumber  String   @unique
+  phone          String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department     Department    @relation(fields: [departmentId], references: [id])
+  appointments   Appointment[]
+  medicalRecords MedicalRecord[]
+  prescriptions  Prescription[]
+}
+
+model Patient {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  departmentId String?
+  name         String
+  dateOfBirth  DateTime
+  gender       Gender
+  phone        String?
+  address      String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department     Department?   @relation(fields: [departmentId], references: [id])
+  appointments   Appointment[]
+  medicalRecords MedicalRecord[]
+  prescriptions  Prescription[]
+}
+
+model Appointment {
+  id             String            @id @default(uuid())
+  patientId      String
+  doctorId       String
+  departmentId   String
+  appointmentDate DateTime
+  status         AppointmentStatus @default(SCHEDULED)
+  reason         String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  patient      Patient       @relation(fields: [patientId], references: [id])
+  doctor       Doctor        @relation(fields: [doctorId], references: [id])
+  department   Department    @relation(fields: [departmentId], references: [id])
+  
+  medicalRecord MedicalRecord?
+
+  @@unique([doctorId, appointmentDate])
+}
+
+model MedicalRecord {
+  id            String              @id @default(uuid())
+  patientId     String
+  doctorId      String
+  appointmentId String?             @unique
+  symptoms      String
+  diagnosis     String
+  treatment     String
+  notes         String?
+  followUpDate  DateTime?
+  status        MedicalRecordStatus @default(OPEN)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  patient     Patient      @relation(fields: [patientId], references: [id])
+  doctor      Doctor       @relation(fields: [doctorId], references: [id])
+  appointment Appointment? @relation(fields: [appointmentId], references: [id])
+}
+
+model Medication {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  prescriptionMedications PrescriptionMedication[]
+}
+
+model Prescription {
+  id        String             @id @default(uuid())
+  patientId String
+  doctorId  String
+  notes     String?
+  status    PrescriptionStatus @default(ACTIVE)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  patient                 Patient                  @relation(fields: [patientId], references: [id])
+  doctor                  Doctor                   @relation(fields: [doctorId], references: [id])
+  prescriptionMedications PrescriptionMedication[]
+}
+
+model PrescriptionMedication {
+  id             String   @id @default(uuid())
+  prescriptionId String
+  medicationId   String
+  dosage         String
+  frequency      String
+  duration       String
+  notes          String?
+
+  prescription Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  medication   Medication   @relation(fields: [medicationId], references: [id])
+
+  @@unique([prescriptionId, medicationId])
+}
