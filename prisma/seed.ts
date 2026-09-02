@@ -42,68 +42,20 @@ async function main() {
     prisma.department.create({ data: { name: "Orthopedics", description: "Bone and joint care" } }),
   ]);
 
-  const [adminUser, doctorUserA, doctorUserB, nurseUser, receptionUser, patientUser] = await Promise.all([
-    prisma.user.create({
-      data: {
-        firstName: "Leul",
-        lastName: "Admin",
-        email: "admin@hms.local",
-        passwordHash,
-        role: "ADMIN",
-      },
-    }),
-    prisma.user.create({
-      data: {
-        firstName: "Marta",
-        lastName: "Hayle",
-        email: "doctor.cardiology@hms.local",
-        passwordHash,
-        role: "DOCTOR",
-      },
-    }),
-    prisma.user.create({
-      data: {
-        firstName: "Natan",
-        lastName: "Kebede",
-        email: "doctor.neuro@hms.local",
-        passwordHash,
-        role: "DOCTOR",
-      },
-    }),
-    prisma.user.create({
-      data: {
-        firstName: "Selam",
-        lastName: "Tesfaye",
-        email: "nurse@hms.local",
-        passwordHash,
-        role: "NURSE",
-      },
-    }),
-    prisma.user.create({
-      data: {
-        firstName: "Abel",
-        lastName: "Frontdesk",
-        email: "reception@hms.local",
-        passwordHash,
-        role: "RECEPTIONIST",
-      },
-    }),
-    prisma.user.create({
-      data: {
-        firstName: "Mimi",
-        lastName: "Bekele",
-        email: "patient@hms.local",
-        passwordHash,
-        role: "PATIENT",
-      },
-    }),
+  const [adminUser, doctorUserA, doctorUserB, nurseUser, receptionUser, patientUser, patientUserB, patientUserC] = await Promise.all([
+    prisma.user.create({ data: { email: "admin@hms.local", password: passwordHash, role: "ADMIN" } }),
+    prisma.user.create({ data: { email: "doctor.cardiology@hms.local", password: passwordHash, role: "DOCTOR" } }),
+    prisma.user.create({ data: { email: "doctor.neuro@hms.local", password: passwordHash, role: "DOCTOR" } }),
+    prisma.user.create({ data: { email: "nurse@hms.local", password: passwordHash, role: "NURSE" } }),
+    prisma.user.create({ data: { email: "reception@hms.local", password: passwordHash, role: "RECEPTIONIST" } }),
+    prisma.user.create({ data: { email: "patient@hms.local", password: passwordHash, role: "PATIENT" } }),
+    prisma.user.create({ data: { email: "samuel.assefa@hms.local", password: passwordHash, role: "PATIENT" } }),
+    prisma.user.create({ data: { email: "hana.tadesse@hms.local", password: passwordHash, role: "PATIENT" } }),
   ]);
 
   const doctorA = await prisma.doctor.create({
     data: {
-      firstName: doctorUserA.firstName,
-      lastName: doctorUserA.lastName,
-      email: doctorUserA.email,
+      name: "Marta Hayle",
       specialization: "Cardiologist",
       licenseNumber: "DOC-1001",
       departmentId: departments[0].id,
@@ -113,9 +65,7 @@ async function main() {
 
   const doctorB = await prisma.doctor.create({
     data: {
-      firstName: doctorUserB.firstName,
-      lastName: doctorUserB.lastName,
-      email: doctorUserB.email,
+      name: "Natan Kebede",
       specialization: "Neurologist",
       licenseNumber: "DOC-1002",
       departmentId: departments[1].id,
@@ -125,14 +75,11 @@ async function main() {
 
   const patientA = await prisma.patient.create({
     data: {
-      firstName: patientUser.firstName,
-      lastName: patientUser.lastName,
+      name: "Mimi Bekele",
       dateOfBirth: new Date("1998-05-14T00:00:00.000Z"),
       gender: "FEMALE",
       phone: "+251-911-000001",
-      email: patientUser.email,
       address: "Bole, Addis Ababa",
-      emergencyContact: "Alemu Bekele - +251-911-999111",
       departmentId: departments[0].id,
       userId: patientUser.id,
     },
@@ -140,29 +87,25 @@ async function main() {
 
   const patientB = await prisma.patient.create({
     data: {
-      firstName: "Samuel",
-      lastName: "Assefa",
+      name: "Samuel Assefa",
       dateOfBirth: new Date("1987-03-22T00:00:00.000Z"),
       gender: "MALE",
       phone: "+251-911-000002",
-      email: "samuel.assefa@hms.local",
       address: "CMC, Addis Ababa",
-      emergencyContact: "Liya Assefa - +251-911-999222",
       departmentId: departments[1].id,
+      userId: patientUserB.id,
     },
   });
 
   const patientC = await prisma.patient.create({
     data: {
-      firstName: "Hana",
-      lastName: "Tadesse",
+      name: "Hana Tadesse",
       dateOfBirth: new Date("2013-10-02T00:00:00.000Z"),
       gender: "FEMALE",
       phone: "+251-911-000003",
-      email: "hana.tadesse@hms.local",
       address: "Piassa, Addis Ababa",
-      emergencyContact: "Rahel Tadesse - +251-911-999333",
       departmentId: departments[2].id,
+      userId: patientUserC.id,
     },
   });
 
@@ -192,7 +135,7 @@ async function main() {
     prisma.appointment.create({
       data: {
         appointmentDate: addDays(now, 1, 9, 30),
-        status: "CONFIRMED",
+        status: "SCHEDULED",
         reason: "Routine checkup",
         patientId: patientC.id,
         doctorId: doctorA.id,
@@ -240,40 +183,32 @@ async function main() {
   const medA = await prisma.medication.create({
     data: {
       name: "Amlodipine",
-      genericName: "Amlodipine",
-      form: "Tablet",
-      strength: "5mg",
-      manufacturer: "HMS Pharma",
+      description: "Antihypertensive medication",
     },
   });
 
   const medB = await prisma.medication.create({
     data: {
       name: "Sumatriptan",
-      genericName: "Sumatriptan",
-      form: "Tablet",
-      strength: "50mg",
-      manufacturer: "HMS Pharma",
+      description: "Acute migraine treatment",
     },
   });
 
   const prescriptionA = await prisma.prescription.create({
     data: {
-      instructions: "Take one tablet every morning",
+      notes: "Take one tablet every morning",
       status: "ACTIVE",
       doctorId: doctorA.id,
       patientId: patientA.id,
-      medicalRecordId: recordA.id,
     },
   });
 
   const prescriptionB = await prisma.prescription.create({
     data: {
-      instructions: "Take at onset of severe headache",
+      notes: "Take at onset of severe headache",
       status: "ACTIVE",
       doctorId: doctorB.id,
       patientId: patientB.id,
-      medicalRecordId: recordB.id,
     },
   });
 

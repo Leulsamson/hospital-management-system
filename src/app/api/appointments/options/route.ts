@@ -13,15 +13,15 @@ export async function GET(request: NextRequest) {
     prisma.department.findMany({ where: { isActive: true }, orderBy: { name: "asc" }, select: { id: true, name: true } }),
     prisma.doctor.findMany({
       where: { isActive: true },
-      orderBy: [{ firstName: "asc" }, { lastName: "asc" }],
-      select: { id: true, firstName: true, lastName: true, specialization: true, departmentId: true },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true, specialization: true, departmentId: true },
     }),
     auth.session.role === "PATIENT"
-      ? prisma.patient.findMany({ where: { userId: auth.session.id, isActive: true }, select: { id: true, firstName: true, lastName: true, departmentId: true } })
+      ? prisma.patient.findMany({ where: { userId: auth.session.id, isActive: true }, select: { id: true, name: true, departmentId: true } })
       : prisma.patient.findMany({
           where: { isActive: true },
-          orderBy: [{ firstName: "asc" }, { lastName: "asc" }],
-          select: { id: true, firstName: true, lastName: true, departmentId: true },
+          orderBy: { name: "asc" },
+          select: { id: true, name: true, departmentId: true },
         }),
   ]);
 

@@ -1,4 +1,4 @@
-import { AppointmentStatus } from "@/generated/prisma/enums";
+import { AppointmentStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export const WORK_START_HOUR = 9;
@@ -7,12 +7,13 @@ export const SLOT_MINUTES = 30;
 
 export const ACTIVE_APPOINTMENT_STATUSES: AppointmentStatus[] = [
   "SCHEDULED",
-  "CONFIRMED",
 ];
 
-export function parseAppointmentId(id: string): number | null {
-  const parsed = Number(id);
-  return Number.isInteger(parsed) && parsed > 0 ? parsed : null;
+export function parseAppointmentId(id: string): string | null {
+  if (!id || typeof id !== "string") return null;
+  // Expecting UUID string ids — basic validation
+  const isUuid = /^[0-9a-fA-F-]{36}$/.test(id);
+  return isUuid ? id : null;
 }
 
 export function buildTimeSlots(date: Date): Date[] {
@@ -40,11 +41,11 @@ export function formatTimeSlot(date: Date): string {
 }
 
 export async function validateAppointmentBooking(input: {
-  patientId: number;
-  doctorId: number;
-  departmentId: number;
+  patientId: string;
+  doctorId: string;
+  departmentId: string;
   appointmentDate: Date;
-  excludeAppointmentId?: number;
+  excludeAppointmentId?: string;
 }) {
   if (input.appointmentDate.getTime() <= Date.now()) {
     return { ok: false as const, message: "Appointment must be scheduled in the future" };
@@ -97,7 +98,7 @@ export async function validateAppointmentBooking(input: {
   return { ok: true as const };
 }
 
-export async function getAvailableSlots(doctorId: number, date: string) {
+export async function getAvailableSlots(doctorId: string, date: string) {
   const [year, month, day] = date.split("-").map(Number);
   const dayDate = new Date(year, month - 1, day);
 

@@ -32,12 +32,11 @@ export default async function AppointmentsPage() {
     prisma.appointment.findMany({
       where: patientScope,
       include: {
-        patient: { select: { id: true, firstName: true, lastName: true } },
+        patient: { select: { id: true, name: true } },
         doctor: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,
             specialization: true,
           },
         },
@@ -53,8 +52,8 @@ export default async function AppointmentsPage() {
         status: { in: ["SCHEDULED", "CONFIRMED"] },
       },
       include: {
-        patient: { select: { firstName: true, lastName: true } },
-        doctor: { select: { firstName: true, lastName: true } },
+        patient: { select: { name: true } },
+        doctor: { select: { name: true } },
       },
       orderBy: { appointmentDate: "asc" },
     }),

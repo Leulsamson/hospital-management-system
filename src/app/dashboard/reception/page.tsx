@@ -23,11 +23,11 @@ export default async function ReceptionDashboardPage() {
       prisma.appointment.findMany({
         where: {
           appointmentDate: { gte: todayStart, lte: todayEnd },
-          status: { in: ["SCHEDULED", "CONFIRMED"] },
+          status: { in: ["SCHEDULED"] },
         },
         include: {
-          patient: { select: { firstName: true, lastName: true } },
-          doctor: { select: { firstName: true, lastName: true } },
+          patient: { select: { name: true } },
+          doctor: { select: { name: true } },
         },
         orderBy: { appointmentDate: "asc" },
       }),

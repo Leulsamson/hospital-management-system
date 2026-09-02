@@ -12,7 +12,7 @@ export default async function PatientDashboardPage() {
         orderBy: { appointmentDate: "asc" },
         take: 1,
         include: {
-          doctor: { select: { firstName: true, lastName: true, specialization: true } },
+          doctor: { select: { name: true, specialization: true } },
         },
       },
       medicalRecords: {
@@ -45,8 +45,7 @@ export default async function PatientDashboardPage() {
               </p>
               {patient.appointments[0] ? (
                 <p className="mt-1 text-sm text-soft">
-                  Dr. {patient.appointments[0].doctor.firstName} {patient.appointments[0].doctor.lastName} (
-                  {patient.appointments[0].doctor.specialization})
+                  Dr. {patient.appointments[0].doctor.name} ({patient.appointments[0].doctor.specialization})
                 </p>
               ) : null}
             </article>

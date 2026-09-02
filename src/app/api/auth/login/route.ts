@@ -24,14 +24,15 @@ export async function POST(request: NextRequest) {
     const email = parsed.data.email.trim().toLowerCase();
     const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user || !user.isActive) {
+    if (!user) {
       return NextResponse.json(
         { success: false, message: "Invalid credentials" },
         { status: 401 },
       );
     }
 
-    const isValidPassword = await verifyPassword(parsed.data.password, user.passwordHash);
+    // Verify password (password field stores the hashed password in the current schema)
+    const isValidPassword = await verifyPassword(parsed.data.password, user.password);
 
     if (!isValidPassword) {
       return NextResponse.json(
@@ -40,12 +41,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Try to load a linked profile name (doctor / patient / nurse)
+    let profileName: string | null = null;
+    let profileIsActive: boolean | null = null;
+
+    if (user.role === "DOCTOR") {
+      const doc = await prisma.doctor.findUnique({ where: { userId: user.id }, select: { name: true, isActive: true } });
+      profileName = doc?.name ?? null;
+      profileIsActive = doc?.isActive ?? null;
+    } else if (user.role === "PATIENT") {
+      const pat = await prisma.patient.findUnique({ where: { userId: user.id }, select: { name: true, isActive: true } });
+      profileName = pat?.name ?? null;
+      profileIsActive = pat?.isActive ?? null;
+    } else if (user.role === "NURSE") {
+      const nurse = await prisma.nurse.findUnique({ where: { userId: user.id }, select: { name: true, isActive: true } });
+      profileName = nurse?.name ?? null;
+      profileIsActive = nurse?.isActive ?? null;
+    }
+
+    if (profileIsActive === false) {
+      return NextResponse.json(
+        { success: false, message: "Account is deactivated" },
+        { status: 403 },
+      );
+    }
+
     const token = await signSessionToken({
       id: user.id,
       role: user.role,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      name: profileName ?? user.email,
     });
 
     const response = NextResponse.json({
@@ -54,8 +79,7 @@ export async function POST(request: NextRequest) {
         id: user.id,
         email: user.email,
         role: user.role,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        name: profileName ?? user.email,
       },
     });
 

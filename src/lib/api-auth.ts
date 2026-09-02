@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { Role } from "@/generated/prisma/enums";
+import type { Role } from "@prisma/client";
 import { getSessionFromRequest } from "@/lib/auth";
 
 export async function requireApiSession(
   request: NextRequest,
   allowedRoles?: Role[],
-): Promise<{ ok: true; session: { id: number; role: Role } } | { ok: false; response: NextResponse }> {
+): Promise<{ ok: true; session: { id: string; role: Role } } | { ok: false; response: NextResponse }> {
   const session = await getSessionFromRequest(request);
 
   if (!session) {

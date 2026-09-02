@@ -1,16 +1,16 @@
 type TodayAppointment = {
-  id: number;
-  appointmentDate: Date;
+  id: string;
+  appointmentDate: string;
   status: string;
-  patient: { firstName: string; lastName: string };
-  doctor: { firstName: string; lastName: string };
+  patient: { name: string };
+  doctor: { name: string };
 };
 
 type TodayAppointmentsProps = {
   appointments: TodayAppointment[];
 };
 
-function formatTime(value: Date) {
+function formatTime(value: string) {
   return new Date(value).toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
@@ -49,10 +49,10 @@ export default function TodayAppointments({ appointments }: TodayAppointmentsPro
                   {formatTime(appointment.appointmentDate)}
                 </span>
                 <span>
-                  {appointment.patient.firstName} {appointment.patient.lastName}
+                  {appointment.patient.name}
                 </span>
                 <span className="text-[var(--ink-soft)]">
-                  Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                  Dr. {appointment.doctor.name}
                 </span>
               </li>
             ))}

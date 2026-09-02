@@ -4,23 +4,21 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Department = {
-  id: number;
+  id: string;
   name: string;
 };
 
 type Doctor = {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id: string;
+  name: string;
   specialization: string;
-  departmentId: number;
+  departmentId: string;
 };
 
 type Patient = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  departmentId: number | null;
+  id: string;
+  name: string;
+  departmentId: string | null;
 };
 
 type TimeSlot = {
@@ -30,7 +28,7 @@ type TimeSlot = {
 
 type AppointmentFormProps = {
   showPatientSelect?: boolean;
-  defaultPatientId?: number;
+  defaultPatientId?: string;
   onSuccessRedirect?: string;
 };
 
@@ -49,7 +47,7 @@ export default function AppointmentForm({
   const [slots, setSlots] = useState<TimeSlot[]>([]);
   const [departmentId, setDepartmentId] = useState("");
   const [doctorId, setDoctorId] = useState("");
-  const [patientId, setPatientId] = useState(defaultPatientId ? String(defaultPatientId) : "");
+  const [patientId, setPatientId] = useState(defaultPatientId || "");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [reason, setReason] = useState("");
@@ -57,7 +55,7 @@ export default function AppointmentForm({
   const minDate = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
   const filteredDoctors = useMemo(
-    () => doctors.filter((doctor) => !departmentId || doctor.departmentId === Number(departmentId)),
+    () => doctors.filter((doctor) => !departmentId || doctor.departmentId === departmentId),
     [doctors, departmentId],
   );
 
@@ -83,7 +81,7 @@ export default function AppointmentForm({
       setPatients(payload.data.patients);
 
       if (!showPatientSelect && payload.data.patients.length === 1) {
-        setPatientId(String(payload.data.patients[0].id));
+        setPatientId(payload.data.patients[0].id);
       }
     }
 
@@ -140,9 +138,9 @@ export default function AppointmentForm({
     }
 
     const payload = {
-      ...(showPatientSelect ? { patientId: Number(patientId) } : {}),
-      departmentId: Number(departmentId),
-      doctorId: Number(doctorId),
+      ...(showPatientSelect ? { patientId } : {}),
+      departmentId,
+      doctorId,
       appointmentDate: time,
       reason: reason.trim() || undefined,
     };
@@ -186,7 +184,7 @@ export default function AppointmentForm({
             <option value="">Select patient</option>
             {patients.map((patient) => (
               <option key={patient.id} value={patient.id}>
-                {patient.firstName} {patient.lastName}
+                {patient.name}
               </option>
             ))}
           </select>
@@ -238,7 +236,7 @@ export default function AppointmentForm({
             <option value="">Select doctor</option>
             {filteredDoctors.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
-                Dr. {doctor.firstName} {doctor.lastName} — {doctor.specialization}
+                Dr. {doctor.name} — {doctor.specialization}
               </option>
             ))}
           </select>

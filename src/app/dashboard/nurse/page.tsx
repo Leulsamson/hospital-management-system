@@ -19,11 +19,11 @@ export default async function NurseDashboardPage() {
       prisma.appointment.findMany({
         where: {
           appointmentDate: { gte: start, lte: end },
-          status: { in: ["SCHEDULED", "CONFIRMED"] },
+          status: { in: ["SCHEDULED"] },
         },
         include: {
-          patient: { select: { firstName: true, lastName: true } },
-          doctor: { select: { firstName: true, lastName: true } },
+          patient: { select: { name: true } },
+          doctor: { select: { name: true } },
         },
         orderBy: { appointmentDate: "asc" },
       }),

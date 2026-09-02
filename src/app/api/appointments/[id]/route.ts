@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { AppointmentStatus } from "@/generated/prisma/enums";
+import { AppointmentStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireApiSession } from "@/lib/api-auth";
 import {
@@ -13,23 +13,21 @@ const updateAppointmentSchema = z.object({
   status: z.nativeEnum(AppointmentStatus).optional(),
   reason: z.string().max(400).optional(),
   notes: z.string().max(500).optional(),
-  departmentId: z.number().int().positive().optional(),
-  doctorId: z.number().int().positive().optional(),
+  departmentId: z.string().optional(),
+  doctorId: z.string().optional(),
 });
 
 const appointmentInclude = {
   patient: {
     select: {
       id: true,
-      firstName: true,
-      lastName: true,
+      name: true,
     },
   },
   doctor: {
     select: {
       id: true,
-      firstName: true,
-      lastName: true,
+      name: true,
       specialization: true,
     },
   },
@@ -41,7 +39,7 @@ const appointmentInclude = {
   },
 };
 
-async function getSessionPatientId(userId: number) {
+async function getSessionPatientId(userId: string) {
   const patient = await prisma.patient.findUnique({
     where: { userId },
     select: { id: true },

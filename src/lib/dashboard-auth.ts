@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import type { Role } from "@/generated/prisma/enums";
+import type { Role } from "@prisma/client";
 import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/auth";
 
 export async function requireDashboardSession(allowedRoles?: Role[]) {

@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { AppointmentStatus } from "@/generated/prisma/enums";
+import { AppointmentStatus, Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireApiSession } from "@/lib/api-auth";
 import { validateAppointmentBooking } from "@/lib/appointments";
-import type { Prisma } from "@/generated/prisma/client";
 
 const appointmentRoles = [
   "ADMIN",
@@ -17,9 +16,9 @@ const appointmentRoles = [
 const listQuerySchema = z.object({
   q: z.string().optional(),
   status: z.nativeEnum(AppointmentStatus).optional(),
-  doctorId: z.coerce.number().int().positive().optional(),
-  patientId: z.coerce.number().int().positive().optional(),
-  departmentId: z.coerce.number().int().positive().optional(),
+  doctorId: z.string().optional(),
+  patientId: z.string().optional(),
+  departmentId: z.string().optional(),
   from: z.string().datetime().optional(),
   to: z.string().datetime().optional(),
   page: z.coerce.number().int().min(1).default(1),
@@ -27,15 +26,15 @@ const listQuerySchema = z.object({
 });
 
 const createAppointmentSchema = z.object({
-  patientId: z.number().int().positive().optional(),
-  departmentId: z.number().int().positive(),
-  doctorId: z.number().int().positive(),
+  patientId: z.string().optional(),
+  departmentId: z.string(),
+  doctorId: z.string(),
   appointmentDate: z.string().datetime(),
   reason: z.string().max(400).optional(),
   notes: z.string().max(500).optional(),
 });
 
-async function getSessionPatientId(userId: number) {
+async function getSessionPatientId(userId: string) {
   const patient = await prisma.patient.findUnique({
     where: { userId },
     select: { id: true },
@@ -107,15 +106,7 @@ export async function GET(request: NextRequest) {
           OR: [
             {
               patient: {
-                firstName: {
-                  contains: q,
-                  mode: "insensitive" as const,
-                },
-              },
-            },
-            {
-              patient: {
-                lastName: {
+                name: {
                   contains: q,
                   mode: "insensitive" as const,
                 },
@@ -123,15 +114,7 @@ export async function GET(request: NextRequest) {
             },
             {
               doctor: {
-                firstName: {
-                  contains: q,
-                  mode: "insensitive" as const,
-                },
-              },
-            },
-            {
-              doctor: {
-                lastName: {
+                name: {
                   contains: q,
                   mode: "insensitive" as const,
                 },
@@ -189,16 +172,14 @@ export async function GET(request: NextRequest) {
         patient: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,
           },
         },
 
         doctor: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,
             specialization: true,
           },
         },
@@ -313,7 +294,6 @@ export async function POST(request: NextRequest) {
         appointmentDate,
 
         reason: parsed.data.reason?.trim() || null,
-        notes: parsed.data.notes?.trim() || null,
 
         status: "SCHEDULED",
       },
@@ -322,16 +302,14 @@ export async function POST(request: NextRequest) {
         patient: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,
           },
         },
 
         doctor: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,
             specialization: true,
           },
         },

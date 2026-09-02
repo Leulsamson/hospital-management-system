@@ -1,10 +1,9 @@
 import Link from "next/link";
-import type { Role } from "@/generated/prisma/enums";
+import type { Role } from "@prisma/client";
 import LogoutButton from "@/components/logout-button";
 
 type SessionUser = {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   role: Role;
 };
@@ -76,7 +75,7 @@ export default function DashboardShell({ user, stats }: DashboardShellProps) {
               <div>
                 <p className="text-xs font-semibold tracking-[0.2em] text-[var(--brand)]">WELCOME BACK</p>
                 <h2 className="mt-2 text-3xl font-semibold">
-                  {user.firstName} {user.lastName}
+                  {user.name}
                 </h2>
                 <p className="mt-1 text-sm text-soft">{user.email}</p>
               </div>

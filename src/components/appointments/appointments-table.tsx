@@ -4,18 +4,17 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type Appointment = {
-  id: number;
+  id: string;
   appointmentDate: string;
-  status: "SCHEDULED" | "CONFIRMED" | "COMPLETED" | "CANCELLED" | "NO_SHOW";
+  status: "SCHEDULED" | "COMPLETED" | "CANCELLED";
   reason: string | null;
-  patient: { id: number; firstName: string; lastName: string };
+  patient: { id: string; name: string };
   doctor: {
-    id: number;
-    firstName: string;
-    lastName: string;
+    id: string;
+    name: string;
     specialization: string;
   };
-  department: { id: number; name: string };
+  department: { id: string; name: string };
 };
 
 type AppointmentsResponse = {
@@ -36,10 +35,8 @@ type AppointmentsTableProps = {
 
 const statusStyles: Record<Appointment["status"], string> = {
   SCHEDULED: "text-[#0b5f7a]",
-  CONFIRMED: "text-[#0f766e]",
   COMPLETED: "text-[var(--ink-soft)]",
   CANCELLED: "text-[#b42318]",
-  NO_SHOW: "text-[#b45309]",
 };
 
 function formatDateTime(value: string) {
@@ -97,7 +94,7 @@ export default function AppointmentsTable({
     setLoading(false);
   }
 
-  async function cancelAppointment(id: number) {
+  async function cancelAppointment(id: string) {
     const confirmed = window.confirm("Cancel this appointment?");
     if (!confirmed) {
       return;
@@ -114,21 +111,6 @@ export default function AppointmentsTable({
     await fetchAppointments(page);
   }
 
-  async function confirmAppointment(id: number) {
-    const response = await fetch(`/api/appointments/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "CONFIRMED" }),
-    });
-
-    if (!response.ok) {
-      const payload = (await response.json().catch(() => null)) as { message?: string } | null;
-      setError(payload?.message ?? "Unable to confirm appointment");
-      return;
-    }
-
-    await fetchAppointments(page);
-  }
 
   return (
     <section className="space-y-4">
@@ -159,10 +141,8 @@ export default function AppointmentsTable({
             >
               <option value="">All</option>
               <option value="SCHEDULED">Scheduled</option>
-              <option value="CONFIRMED">Confirmed</option>
               <option value="COMPLETED">Completed</option>
               <option value="CANCELLED">Cancelled</option>
-              <option value="NO_SHOW">No show</option>
             </select>
           </div>
 
@@ -219,10 +199,10 @@ export default function AppointmentsTable({
                       <p className="text-[var(--ink-soft)]">{formatted.time}</p>
                     </td>
                     <td className="px-4 py-3">
-                      {appointment.patient.firstName} {appointment.patient.lastName}
+                      {appointment.patient.name}
                     </td>
                     <td className="px-4 py-3">
-                      Dr. {appointment.doctor.firstName} {appointment.doctor.lastName}
+                      Dr. {appointment.doctor.name}
                     </td>
                     <td className="px-4 py-3">{appointment.department.name}</td>
                     <td className={`px-4 py-3 font-medium ${statusStyles[appointment.status]}`}>
@@ -231,15 +211,7 @@ export default function AppointmentsTable({
                     {canManage ? (
                       <td className="px-4 py-3">
                         <div className="flex flex-wrap gap-2">
-                          {appointment.status === "SCHEDULED" ? (
-                            <button
-                              type="button"
-                              onClick={() => confirmAppointment(appointment.id)}
-                              className="text-[var(--brand)] underline"
-                            >
-                              Confirm
-                            </button>
-                          ) : null}
+                          
                           {appointment.status === "SCHEDULED" ||
                           appointment.status === "CONFIRMED" ? (
                             <button

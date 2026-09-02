@@ -1,6 +1,6 @@
 import { jwtVerify, SignJWT } from "jose";
 import type { NextRequest, NextResponse } from "next/server";
-import type { Role } from "@/generated/prisma/enums";
+import type { Role } from "@prisma/client";
 
 export const SESSION_COOKIE_NAME = "hms_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7;
@@ -9,16 +9,14 @@ type SessionClaims = {
   sub: string;
   role: Role;
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
 };
 
 export type SessionUser = {
-  id: number;
+  id: string;
   role: Role;
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
 };
 
 function getAuthSecret(): Uint8Array {
@@ -35,8 +33,7 @@ export async function signSessionToken(user: SessionUser): Promise<string> {
   return new SignJWT({
     role: user.role,
     email: user.email,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    name: user.name,
   })
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(String(user.id))
@@ -49,9 +46,9 @@ export async function verifySessionToken(token: string): Promise<SessionUser | n
   try {
     const { payload } = await jwtVerify(token, getAuthSecret());
     const claims = payload as Partial<SessionClaims>;
-    const userId = Number(claims.sub);
+    const userId = String(claims.sub);
 
-    if (!userId || !claims.role || !claims.email || !claims.firstName || !claims.lastName) {
+    if (!userId || !claims.role || !claims.email || !claims.name) {
       return null;
     }
 
@@ -59,8 +56,7 @@ export async function verifySessionToken(token: string): Promise<SessionUser | n
       id: userId,
       role: claims.role,
       email: claims.email,
-      firstName: claims.firstName,
-      lastName: claims.lastName,
+      name: claims.name,
     };
   } catch {
     return null;

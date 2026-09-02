@@ -4,7 +4,7 @@ import { requireApiSession } from "@/lib/api-auth";
 import { getAvailableSlots } from "@/lib/appointments";
 
 const querySchema = z.object({
-  doctorId: z.coerce.number().int().positive(),
+  doctorId: z.string(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 });
 

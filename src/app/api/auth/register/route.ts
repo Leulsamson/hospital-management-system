@@ -3,11 +3,10 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getSessionFromRequest } from "@/lib/auth";
 import { hashPassword } from "@/lib/password";
-import { Role } from "@/generated/prisma/enums";
+import { Role } from "@prisma/client";
 
 const registerSchema = z.object({
-  firstName: z.string().min(1).max(100),
-  lastName: z.string().min(1).max(100),
+  name: z.string().min(1).max(200),
   email: z.string().email(),
   password: z.string().min(8),
   role: z.nativeEnum(Role).optional(),
@@ -73,10 +72,8 @@ export async function POST(request: NextRequest) {
 
     const user = await prisma.user.create({
       data: {
-        firstName: parsed.data.firstName.trim(),
-        lastName: parsed.data.lastName.trim(),
         email: parsed.data.email.trim().toLowerCase(),
-        passwordHash,
+        password: passwordHash,
         role: assignedRole,
       },
     });
@@ -86,8 +83,6 @@ export async function POST(request: NextRequest) {
         success: true,
         user: {
           id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
           email: user.email,
           role: user.role,
         },
