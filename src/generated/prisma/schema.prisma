@@ -54,12 +54,14 @@ model User {
   email     String   @unique
   password  String
   role      Role     @default(PATIENT)
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  doctor  Doctor?
-  patient Patient?
-  nurse   Nurse?
+  doctor    Doctor?
+  patient   Patient?
+  nurse     Nurse?
+  auditLogs AuditLog[]
 }
 
 model Nurse {
@@ -183,13 +185,30 @@ model MedicalRecord {
 }
 
 model Medication {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(uuid())
+  name          String
+  description   String?
+  stockQuantity Int      @default(0)
+  reorderLevel  Int      @default(10)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   prescriptionMedications PrescriptionMedication[]
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  action     String
+  resource   String
+  resourceId String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([resource, resourceId])
+  @@index([createdAt])
 }
 
 model Prescription {

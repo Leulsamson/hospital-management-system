@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
         id: true,
         email: true,
         role: true,
+        isActive: true,
         createdAt: true,
         doctor: { select: { id: true, name: true, isActive: true } },
         patient: { select: { id: true, name: true, isActive: true } },
@@ -63,7 +64,7 @@ export async function POST(request: NextRequest) {
         password: await hashPassword(parsed.data.password),
         role: parsed.data.role,
       },
-      select: { id: true, email: true, role: true, createdAt: true },
+      select: { id: true, email: true, role: true, isActive: true, createdAt: true },
     });
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {

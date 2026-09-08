@@ -12,6 +12,8 @@ const querySchema = z.object({
 const medicationSchema = z.object({
   name: z.string().min(1).max(200),
   description: z.string().max(1000).optional().nullable(),
+  stockQuantity: z.number().int().min(0).optional(),
+  reorderLevel: z.number().int().min(0).optional(),
 });
 
 export async function GET(request: NextRequest) {
@@ -38,7 +40,7 @@ export async function POST(request: NextRequest) {
   const parsed = medicationSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ success: false, message: "Invalid payload" }, { status: 400 });
   const medication = await prisma.medication.create({
-    data: { name: parsed.data.name.trim(), description: parsed.data.description?.trim() || null },
+    data: { name: parsed.data.name.trim(), description: parsed.data.description?.trim() || null, stockQuantity: parsed.data.stockQuantity, reorderLevel: parsed.data.reorderLevel },
   });
   return NextResponse.json({ success: true, data: medication }, { status: 201 });
 }

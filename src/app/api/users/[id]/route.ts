@@ -8,6 +8,7 @@ import { hashPassword } from "@/lib/password";
 const updateSchema = z.object({
   role: z.nativeEnum(Role).optional(),
   password: z.string().min(8).max(200).optional(),
+  isActive: z.boolean().optional(),
 });
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
@@ -15,16 +16,17 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
   if (!auth.ok) return auth.response;
   const { id } = await context.params;
   const parsed = updateSchema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success || (!parsed.data.role && !parsed.data.password)) {
-    return NextResponse.json({ success: false, message: "Provide a role or password to update" }, { status: 400 });
+  if (!parsed.success || (!parsed.data.role && !parsed.data.password && parsed.data.isActive === undefined)) {
+    return NextResponse.json({ success: false, message: "Provide a role, password, or active state to update" }, { status: 400 });
   }
   const data = await prisma.user.update({
     where: { id },
     data: {
       ...(parsed.data.role ? { role: parsed.data.role } : {}),
       ...(parsed.data.password ? { password: await hashPassword(parsed.data.password) } : {}),
+      ...(parsed.data.isActive !== undefined ? { isActive: parsed.data.isActive } : {}),
     },
-    select: { id: true, email: true, role: true, updatedAt: true },
+    select: { id: true, email: true, role: true, isActive: true, updatedAt: true },
   });
   return NextResponse.json({ success: true, data });
 }

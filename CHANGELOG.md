@@ -19,6 +19,9 @@ All notable changes to this project are documented here.
 - Prescription APIs with nested prescription medication management under src/app/api/prescriptions.
 - Admin user-management APIs under src/app/api/users.
 - Role-protected dashboard summary metrics under src/app/api/dashboard/stats.
+- Payment and pharmacy inventory APIs under src/app/api/payments and src/app/api/inventory.
+- Audit-log persistence/viewing, login rate limiting, and an initial automated security test suite.
+- Dedicated clinical, administration, payments, inventory, audit, and analytics dashboard pages.
 - Prisma schema and generated client (prisma/schema.prisma and src/generated/prisma)
 
 ### Changed
@@ -28,6 +31,7 @@ All notable changes to this project are documented here.
 ### In progress
 - Clinical and user-management UI screens remain to be built.
 - Automated tests, analytics visualizations, and production security hardening remain.
+- Prisma migration history requires reconciliation before applying the new schema migration to the current drifted local database.
 
 ### Fixed
 - Seed script updated to match current model shapes (name fields, password property name and generated user accounts).
@@ -75,23 +79,23 @@ Status: ✅ Core API complete; UI planned
 - Medication CRUD, prescription CRUD, nested medication items, and status transitions are present
 
 ### Phase 10 — User Management
-Status: 🟡 Core administrative API
+Status: ✅ Core API and administrative UI
 - Admin user listing, creation, role assignment, and password updates are present
-- Account deactivation requires a future User.isActive schema migration
+- Account activation/deactivation and login enforcement are implemented
 
 ### Phase 11 — Dashboard & Analytics
-Status: 🟡 Core metrics available
-- Role dashboards exist and /api/dashboard/stats provides hospital summary metrics
+Status: ✅ Core metrics and analytics available
+- Role dashboards, /api/dashboard/stats, and analytics charts are present
 
 ### Phase 12 — Frontend UI/UX
-Status: 🟡 In progress
-- Core shell, landing/login, appointment, patient, doctor, and department screens exist
-- Clinical and user-management screens remain
+Status: 🟡 Core screens available; polish remains
+- Core shell plus clinical, user, payment, inventory, audit, and analytics screens are present
+- Accessibility and richer form workflows remain
 
 ### Phase 13 — Security & Validation
-Status: 🟡 Core protections present; hardening remains
-- Sessions, password hashing, validation, RBAC, ownership checks, and database constraints are present
-- Automated security tests, rate limiting, audit logs, and monitoring remain
+Status: 🟡 Core protections present; production hardening remains
+- Sessions, password hashing, validation, RBAC, ownership checks, constraints, login rate limiting, audit logs, and unit security tests are present
+- Broader endpoint tests, distributed rate limiting, CSRF review, and monitoring remain
 
 
 *This changelog was generated from the project repository state. It documents implemented APIs and notable code changes visible in the current tree.*

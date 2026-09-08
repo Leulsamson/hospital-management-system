@@ -43,7 +43,7 @@ Intended users: hospital administrators, receptionists, doctors, nurses and pati
 
 This repository is under development. The current focus is on backend APIs and data-model alignment (Prisma). The implemented and partially implemented areas are documented below.
 
-Current active development phase: Phase 8–13 integration. Phases 5–7 backend workflows are implemented; clinical APIs and administrative metrics are available, while their UI and automated tests remain in progress.
+Current active development phase: Phase 12–13 hardening. Phases 5–11 core workflows and APIs are implemented; the major module screens are available, while richer UX and integration hardening remain.
 
 Implemented (verified in source):
 - Authentication (register / login / session) with JWT session cookie
@@ -55,12 +55,12 @@ Implemented (verified in source):
 - Medical-record, medication, prescription, user-management, and dashboard metrics APIs
 
 Partially implemented / In progress:
-- Dedicated clinical and user-management UI screens remain
-- Automated tests, analytics visualization, and production hardening remain
+- Richer field-specific forms and accessibility polish remain
+- Broader endpoint tests and production hardening remain
 
 Planned (not implemented in code):
-- Clinical and user-management UI
-- Automated API/security tests and production hardening
+- Pharmacy dispensing history, payment provider integration, and operational exports
+- Distributed rate limiting, monitoring, and broader API integration tests
 
 
 ## Main features (implemented)
@@ -127,6 +127,12 @@ Users and dashboard
 - GET/POST /api/users — admin-only user listing/creation with role filtering
 - PUT /api/users/:id — admin-only role assignment or password update
 - GET /api/dashboard/stats — role-protected hospital summary metrics
+
+Payments, inventory, and auditing
+- GET/POST /api/payments — list or create appointment payments
+- PATCH /api/payments/:id — update payment status or receipt
+- GET/PATCH /api/inventory — view stock/low-stock items or update stock
+- GET /api/audit-logs — admin-only paginated audit history
 
 Utilities
 - GET /api/test-db — simple endpoint to test DB connectivity (returns departments)
@@ -437,7 +443,8 @@ Getting started
 
 ## Testing
 
-- Automated tests: none found in the repository. Manual API testing and seeds are used.
+- `npm test` runs the security unit tests using Node's built-in test runner through `tsx`.
+- Broader authenticated API integration tests are still planned.
 
 
 ## Build & deployment
@@ -458,24 +465,23 @@ Getting started
 - 🟡 Phase 7: Doctor & Department Management — backend complete; UI polish and lifecycle work remain
 - ✅ Phase 8: Medical Records — core authenticated CRUD/search/close APIs
 - ✅ Phase 9: Prescriptions & Medications — core APIs and nested medication workflows
-- 🟡 Phase 10: User Management — admin API exists; schema lacks User.isActive for deactivation
-- 🟡 Phase 11: Dashboard & Analytics — role dashboards and summary stats API exist; charts remain
-- 🟡 Phase 12: Frontend UI/UX — core screens exist; clinical/admin screens remain
-- 🟡 Phase 13: Security & Validation — core controls exist; testing/hardening remain
+- ✅ Phase 10: User Management — admin API, UI, active state, and password/role controls
+- ✅ Phase 11: Dashboard & Analytics — role dashboards, summary stats, and activity charts
+- 🟡 Phase 12: Frontend UI/UX — all major module screens exist; accessibility/form polish remains
+- 🟡 Phase 13: Security & Validation — core controls, rate limiting, audit logs, and unit tests; integration hardening remains
 
 
 ## Known limitations
 
-- No automated tests found.
-- The User model has no `isActive` field, so user deactivation cannot be implemented without a schema migration.
-- Clinical and user-management APIs do not yet have dedicated dashboard forms.
+- Existing local database migration history is drifted from the current schema; reconcile it before applying new migrations.
+- Generic management screens are functional foundations; richer field-specific forms remain.
 
 
 ## Future improvements (ideas)
 
-- Add dedicated MedicalRecord, Prescription, Medication, and User management UI
-- Add a User.isActive migration and account deactivation workflow
-- Add automated tests (unit + integration for API)
+- Replace generic management screens with richer field-specific forms and accessibility polish
+- Add automated API integration and authorization tests
+- Add distributed rate limiting, CSRF review, monitoring, payment-provider integration, and pharmacy dispensing history
 - Add role-based UI pages for each user type and per-role dashboards
 - Improve error reporting and monitoring (Sentry, logs)
 - Harden authentication/session handling (rotating secrets, refresh tokens) for production

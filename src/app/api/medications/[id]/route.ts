@@ -6,6 +6,8 @@ import { requireApiSession } from "@/lib/api-auth";
 const updateSchema = z.object({
   name: z.string().min(1).max(200),
   description: z.string().max(1000).optional().nullable(),
+  stockQuantity: z.number().int().min(0).optional(),
+  reorderLevel: z.number().int().min(0).optional(),
 });
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
@@ -25,7 +27,7 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
   if (!parsed.success) return NextResponse.json({ success: false, message: "Invalid payload" }, { status: 400 });
   const data = await prisma.medication.update({
     where: { id },
-    data: { name: parsed.data.name.trim(), description: parsed.data.description?.trim() || null },
+    data: { name: parsed.data.name.trim(), description: parsed.data.description?.trim() || null, stockQuantity: parsed.data.stockQuantity, reorderLevel: parsed.data.reorderLevel },
   });
   return NextResponse.json({ success: true, data });
 }

@@ -125,6 +125,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -218,8 +219,20 @@ exports.Prisma.MedicationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  stockQuantity: 'stockQuantity',
+  reorderLevel: 'reorderLevel',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  resource: 'resource',
+  resourceId: 'resourceId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.PrescriptionScalarFieldEnum = {
@@ -247,6 +260,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -255,6 +273,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN',
@@ -308,6 +332,7 @@ exports.Prisma.ModelName = {
   Payment: 'Payment',
   MedicalRecord: 'MedicalRecord',
   Medication: 'Medication',
+  AuditLog: 'AuditLog',
   Prescription: 'Prescription',
   PrescriptionMedication: 'PrescriptionMedication'
 };

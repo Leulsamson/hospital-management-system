@@ -61,7 +61,7 @@ Remaining:
 
 ## Phase 8 — Medical Records
 
-**Status: ✅ Core API complete; UI planned**
+**Status: 🟡 Core API and UI foundation**
 
 Completed:
 
@@ -75,12 +75,12 @@ Completed:
 
 Remaining:
 
-- Medical-record dashboard pages and forms.
+- Richer field-specific medical-record forms and accessibility polish.
 - Richer doctor-to-patient authorization rules.
 
 ## Phase 9 — Prescriptions & Medication Management
 
-**Status: ✅ Core API complete; UI planned**
+**Status: 🟡 Core API and UI foundation**
 
 Completed:
 
@@ -93,28 +93,26 @@ Completed:
 
 Remaining:
 
-- Prescription and medication dashboard UI.
-- Pharmacy dispensing workflow and inventory tracking.
+- Richer prescription/medication forms and dispensing history.
 
 ## Phase 10 — User Management
 
-**Status: 🟡 Core administrative API**
+**Status: ✅ Core API and administrative UI**
 
 Completed:
 
 - Admin-only paginated user listing with email and role filters.
 - Admin-only user creation with bcrypt password hashing.
 - Admin-only role assignment and password reset/update.
+- Active/inactive account state with migration support and login enforcement.
 
 Remaining:
 
-- The current `User` model has no `isActive` field, so true account deactivation
-  requires a schema migration.
 - Linked doctor/patient/nurse profile creation and lifecycle UI.
 
 ## Phase 11 — Dashboard & Analytics
 
-**Status: 🟡 Core metrics available**
+**Status: ✅ Core metrics and analytics available**
 
 Completed:
 
@@ -123,6 +121,7 @@ Completed:
 - Admin overview counts and dashboard shell statistics.
 - `GET /api/dashboard/stats` for active patients/doctors/departments and
   today/upcoming/completed/cancelled appointment counts.
+- Analytics page with appointment-status and department activity charts.
 
 Remaining:
 
@@ -130,7 +129,7 @@ Remaining:
 
 ## Phase 12 — Frontend UI/UX
 
-**Status: 🟡 In progress**
+**Status: 🟡 Core screens available; polish remains**
 
 Completed:
 
@@ -141,11 +140,12 @@ Completed:
 Remaining:
 
 - Medical-record, prescription, medication, and user-management screens.
+- Payment, inventory, and audit-log screens.
 - Responsive and accessibility review across every page.
 
 ## Phase 13 — Security & Validation
 
-**Status: 🟡 Core protections present; hardening remains**
+**Status: 🟡 Core protections present; production hardening remains**
 
 Completed:
 
@@ -156,18 +156,18 @@ Completed:
 - Patient ownership checks.
 - Prisma relations, unique constraints, and appointment conflict constraint.
 - JSON error responses with appropriate common HTTP statuses.
+- Login rate limiting, audit-log persistence, and admin audit-log viewing.
 
 Remaining:
 
-- Automated authorization/security tests.
-- Rate limiting, CSRF strategy review, structured audit logging, and monitoring.
+- Broader endpoint authorization/security integration tests.
+- Distributed rate limiting, CSRF strategy review, and monitoring.
 - Production secret rotation and database migration rehearsal.
 
 ## Next session checklist
 
-1. Run `npx prisma generate` and `npx tsc --noEmit`.
-2. Run `npm run build`.
-3. Test the new medical-record, prescription, medication, user, and stats APIs
-   with an authenticated seeded account.
-4. Add the remaining module UIs and automated API tests.
+1. Run `npx prisma generate`, `npx tsc --noEmit`, `npm test`, and `npm run build`.
+2. Apply the new migration to a database whose migration history is reconciled.
+3. Smoke-test authenticated clinical, payment, inventory, and user workflows.
+4. Add broader endpoint authorization/security integration tests.
 5. Commit and push the completed work.

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { setSessionCookie, signSessionToken } from "@/lib/auth";
 import { verifyPassword } from "@/lib/password";
+import { rateLimit } from "@/lib/rate-limit";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -10,6 +11,8 @@ const loginSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const limited = rateLimit(`login:${request.headers.get("x-forwarded-for") ?? "unknown"}`, 10);
+  if (limited) return limited;
   try {
     const body = await request.json();
     const parsed = loginSchema.safeParse(body);
@@ -24,7 +27,7 @@ export async function POST(request: NextRequest) {
     const email = parsed.data.email.trim().toLowerCase();
     const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user) {
+    if (!user || !user.isActive) {
       return NextResponse.json(
         { success: false, message: "Invalid credentials" },
         { status: 401 },
