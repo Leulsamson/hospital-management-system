@@ -7,6 +7,7 @@ import {
   parseAppointmentId,
   validateAppointmentBooking,
 } from "@/lib/appointments";
+import { writeAuditLog } from "@/lib/audit";
 
 const updateAppointmentSchema = z.object({
   appointmentDate: z.string().datetime().optional(),
@@ -227,6 +228,7 @@ export async function PUT(
       },
       include: appointmentInclude,
     });
+    await writeAuditLog({ userId: auth.session.id, action: "UPDATE", resource: "Appointment", resourceId: appointmentId });
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error) {
@@ -299,6 +301,7 @@ export async function DELETE(
     where: { id: appointmentId },
     data: { status: "CANCELLED" },
   });
+  await writeAuditLog({ userId: auth.session.id, action: "CANCEL", resource: "Appointment", resourceId: appointmentId });
 
   return NextResponse.json({
     success: true,

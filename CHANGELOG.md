@@ -20,6 +20,7 @@ All notable changes to this project are documented here.
 - Admin user-management APIs under src/app/api/users.
 - Role-protected dashboard summary metrics under src/app/api/dashboard/stats.
 - Payment and pharmacy inventory APIs under src/app/api/payments and src/app/api/inventory.
+- Inventory movement history with stock deltas and reasons.
 - Audit-log persistence/viewing, login rate limiting, and an initial automated security test suite.
 - Dedicated clinical, administration, payments, inventory, audit, and analytics dashboard pages.
 - Prisma schema and generated client (prisma/schema.prisma and src/generated/prisma)

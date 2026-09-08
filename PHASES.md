@@ -94,6 +94,7 @@ Completed:
 Remaining:
 
 - Richer prescription/medication forms and dispensing history.
+- Payment provider integration and pharmacy fulfilment workflow.
 
 ## Phase 10 — User Management
 

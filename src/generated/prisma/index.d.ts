@@ -59,6 +59,11 @@ export type MedicalRecord = $Result.DefaultSelection<Prisma.$MedicalRecordPayloa
  */
 export type Medication = $Result.DefaultSelection<Prisma.$MedicationPayload>
 /**
+ * Model InventoryMovement
+ * 
+ */
+export type InventoryMovement = $Result.DefaultSelection<Prisma.$InventoryMovementPayload>
+/**
  * Model AuditLog
  * 
  */
@@ -380,6 +385,16 @@ export class PrismaClient<
     * ```
     */
   get medication(): Prisma.MedicationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inventoryMovement`: Exposes CRUD operations for the **InventoryMovement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InventoryMovements
+    * const inventoryMovements = await prisma.inventoryMovement.findMany()
+    * ```
+    */
+  get inventoryMovement(): Prisma.InventoryMovementDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.auditLog`: Exposes CRUD operations for the **AuditLog** model.
@@ -866,6 +881,7 @@ export namespace Prisma {
     Payment: 'Payment',
     MedicalRecord: 'MedicalRecord',
     Medication: 'Medication',
+    InventoryMovement: 'InventoryMovement',
     AuditLog: 'AuditLog',
     Prescription: 'Prescription',
     PrescriptionMedication: 'PrescriptionMedication'
@@ -884,7 +900,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "nurse" | "department" | "doctor" | "patient" | "appointment" | "payment" | "medicalRecord" | "medication" | "auditLog" | "prescription" | "prescriptionMedication"
+      modelProps: "user" | "nurse" | "department" | "doctor" | "patient" | "appointment" | "payment" | "medicalRecord" | "medication" | "inventoryMovement" | "auditLog" | "prescription" | "prescriptionMedication"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1554,6 +1570,80 @@ export namespace Prisma {
           }
         }
       }
+      InventoryMovement: {
+        payload: Prisma.$InventoryMovementPayload<ExtArgs>
+        fields: Prisma.InventoryMovementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InventoryMovementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InventoryMovementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>
+          }
+          findFirst: {
+            args: Prisma.InventoryMovementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InventoryMovementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>
+          }
+          findMany: {
+            args: Prisma.InventoryMovementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>[]
+          }
+          create: {
+            args: Prisma.InventoryMovementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>
+          }
+          createMany: {
+            args: Prisma.InventoryMovementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InventoryMovementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>[]
+          }
+          delete: {
+            args: Prisma.InventoryMovementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>
+          }
+          update: {
+            args: Prisma.InventoryMovementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>
+          }
+          deleteMany: {
+            args: Prisma.InventoryMovementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InventoryMovementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InventoryMovementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>[]
+          }
+          upsert: {
+            args: Prisma.InventoryMovementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InventoryMovementPayload>
+          }
+          aggregate: {
+            args: Prisma.InventoryMovementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInventoryMovement>
+          }
+          groupBy: {
+            args: Prisma.InventoryMovementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InventoryMovementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InventoryMovementCountArgs<ExtArgs>
+            result: $Utils.Optional<InventoryMovementCountAggregateOutputType> | number
+          }
+        }
+      }
       AuditLog: {
         payload: Prisma.$AuditLogPayload<ExtArgs>
         fields: Prisma.AuditLogFieldRefs
@@ -1908,6 +1998,7 @@ export namespace Prisma {
     payment?: PaymentOmit
     medicalRecord?: MedicalRecordOmit
     medication?: MedicationOmit
+    inventoryMovement?: InventoryMovementOmit
     auditLog?: AuditLogOmit
     prescription?: PrescriptionOmit
     prescriptionMedication?: PrescriptionMedicationOmit
@@ -1992,10 +2083,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     auditLogs: number
+    inventoryMovements: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+    inventoryMovements?: boolean | UserCountOutputTypeCountInventoryMovementsArgs
   }
 
   // Custom InputTypes
@@ -2014,6 +2107,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuditLogWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInventoryMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InventoryMovementWhereInput
   }
 
 
@@ -2179,10 +2279,12 @@ export namespace Prisma {
 
   export type MedicationCountOutputType = {
     prescriptionMedications: number
+    inventoryMovements: number
   }
 
   export type MedicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     prescriptionMedications?: boolean | MedicationCountOutputTypeCountPrescriptionMedicationsArgs
+    inventoryMovements?: boolean | MedicationCountOutputTypeCountInventoryMovementsArgs
   }
 
   // Custom InputTypes
@@ -2201,6 +2303,13 @@ export namespace Prisma {
    */
   export type MedicationCountOutputTypeCountPrescriptionMedicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PrescriptionMedicationWhereInput
+  }
+
+  /**
+   * MedicationCountOutputType without action
+   */
+  export type MedicationCountOutputTypeCountInventoryMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InventoryMovementWhereInput
   }
 
 
@@ -2423,6 +2532,7 @@ export namespace Prisma {
     patient?: boolean | User$patientArgs<ExtArgs>
     nurse?: boolean | User$nurseArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
+    inventoryMovements?: boolean | User$inventoryMovementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2462,6 +2572,7 @@ export namespace Prisma {
     patient?: boolean | User$patientArgs<ExtArgs>
     nurse?: boolean | User$nurseArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
+    inventoryMovements?: boolean | User$inventoryMovementsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2474,6 +2585,7 @@ export namespace Prisma {
       patient: Prisma.$PatientPayload<ExtArgs> | null
       nurse: Prisma.$NursePayload<ExtArgs> | null
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+      inventoryMovements: Prisma.$InventoryMovementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2881,6 +2993,7 @@ export namespace Prisma {
     patient<T extends User$patientArgs<ExtArgs> = {}>(args?: Subset<T, User$patientArgs<ExtArgs>>): Prisma__PatientClient<$Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     nurse<T extends User$nurseArgs<ExtArgs> = {}>(args?: Subset<T, User$nurseArgs<ExtArgs>>): Prisma__NurseClient<$Result.GetResult<Prisma.$NursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     auditLogs<T extends User$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    inventoryMovements<T extends User$inventoryMovementsArgs<ExtArgs> = {}>(args?: Subset<T, User$inventoryMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3388,6 +3501,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.inventoryMovements
+   */
+  export type User$inventoryMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    where?: InventoryMovementWhereInput
+    orderBy?: InventoryMovementOrderByWithRelationInput | InventoryMovementOrderByWithRelationInput[]
+    cursor?: InventoryMovementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InventoryMovementScalarFieldEnum | InventoryMovementScalarFieldEnum[]
   }
 
   /**
@@ -11888,6 +12025,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     prescriptionMedications?: boolean | Medication$prescriptionMedicationsArgs<ExtArgs>
+    inventoryMovements?: boolean | Medication$inventoryMovementsArgs<ExtArgs>
     _count?: boolean | MedicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["medication"]>
 
@@ -11924,6 +12062,7 @@ export namespace Prisma {
   export type MedicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "stockQuantity" | "reorderLevel" | "createdAt" | "updatedAt", ExtArgs["result"]["medication"]>
   export type MedicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     prescriptionMedications?: boolean | Medication$prescriptionMedicationsArgs<ExtArgs>
+    inventoryMovements?: boolean | Medication$inventoryMovementsArgs<ExtArgs>
     _count?: boolean | MedicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MedicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -11933,6 +12072,7 @@ export namespace Prisma {
     name: "Medication"
     objects: {
       prescriptionMedications: Prisma.$PrescriptionMedicationPayload<ExtArgs>[]
+      inventoryMovements: Prisma.$InventoryMovementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12337,6 +12477,7 @@ export namespace Prisma {
   export interface Prisma__MedicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     prescriptionMedications<T extends Medication$prescriptionMedicationsArgs<ExtArgs> = {}>(args?: Subset<T, Medication$prescriptionMedicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrescriptionMedicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    inventoryMovements<T extends Medication$inventoryMovementsArgs<ExtArgs> = {}>(args?: Subset<T, Medication$inventoryMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12790,6 +12931,30 @@ export namespace Prisma {
   }
 
   /**
+   * Medication.inventoryMovements
+   */
+  export type Medication$inventoryMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    where?: InventoryMovementWhereInput
+    orderBy?: InventoryMovementOrderByWithRelationInput | InventoryMovementOrderByWithRelationInput[]
+    cursor?: InventoryMovementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InventoryMovementScalarFieldEnum | InventoryMovementScalarFieldEnum[]
+  }
+
+  /**
    * Medication without action
    */
   export type MedicationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12805,6 +12970,1143 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MedicationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InventoryMovement
+   */
+
+  export type AggregateInventoryMovement = {
+    _count: InventoryMovementCountAggregateOutputType | null
+    _avg: InventoryMovementAvgAggregateOutputType | null
+    _sum: InventoryMovementSumAggregateOutputType | null
+    _min: InventoryMovementMinAggregateOutputType | null
+    _max: InventoryMovementMaxAggregateOutputType | null
+  }
+
+  export type InventoryMovementAvgAggregateOutputType = {
+    quantityDelta: number | null
+  }
+
+  export type InventoryMovementSumAggregateOutputType = {
+    quantityDelta: number | null
+  }
+
+  export type InventoryMovementMinAggregateOutputType = {
+    id: string | null
+    medicationId: string | null
+    userId: string | null
+    quantityDelta: number | null
+    reason: string | null
+    createdAt: Date | null
+  }
+
+  export type InventoryMovementMaxAggregateOutputType = {
+    id: string | null
+    medicationId: string | null
+    userId: string | null
+    quantityDelta: number | null
+    reason: string | null
+    createdAt: Date | null
+  }
+
+  export type InventoryMovementCountAggregateOutputType = {
+    id: number
+    medicationId: number
+    userId: number
+    quantityDelta: number
+    reason: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InventoryMovementAvgAggregateInputType = {
+    quantityDelta?: true
+  }
+
+  export type InventoryMovementSumAggregateInputType = {
+    quantityDelta?: true
+  }
+
+  export type InventoryMovementMinAggregateInputType = {
+    id?: true
+    medicationId?: true
+    userId?: true
+    quantityDelta?: true
+    reason?: true
+    createdAt?: true
+  }
+
+  export type InventoryMovementMaxAggregateInputType = {
+    id?: true
+    medicationId?: true
+    userId?: true
+    quantityDelta?: true
+    reason?: true
+    createdAt?: true
+  }
+
+  export type InventoryMovementCountAggregateInputType = {
+    id?: true
+    medicationId?: true
+    userId?: true
+    quantityDelta?: true
+    reason?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InventoryMovementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InventoryMovement to aggregate.
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryMovements to fetch.
+     */
+    orderBy?: InventoryMovementOrderByWithRelationInput | InventoryMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InventoryMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InventoryMovements
+    **/
+    _count?: true | InventoryMovementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InventoryMovementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InventoryMovementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InventoryMovementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InventoryMovementMaxAggregateInputType
+  }
+
+  export type GetInventoryMovementAggregateType<T extends InventoryMovementAggregateArgs> = {
+        [P in keyof T & keyof AggregateInventoryMovement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInventoryMovement[P]>
+      : GetScalarType<T[P], AggregateInventoryMovement[P]>
+  }
+
+
+
+
+  export type InventoryMovementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InventoryMovementWhereInput
+    orderBy?: InventoryMovementOrderByWithAggregationInput | InventoryMovementOrderByWithAggregationInput[]
+    by: InventoryMovementScalarFieldEnum[] | InventoryMovementScalarFieldEnum
+    having?: InventoryMovementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InventoryMovementCountAggregateInputType | true
+    _avg?: InventoryMovementAvgAggregateInputType
+    _sum?: InventoryMovementSumAggregateInputType
+    _min?: InventoryMovementMinAggregateInputType
+    _max?: InventoryMovementMaxAggregateInputType
+  }
+
+  export type InventoryMovementGroupByOutputType = {
+    id: string
+    medicationId: string
+    userId: string | null
+    quantityDelta: number
+    reason: string
+    createdAt: Date
+    _count: InventoryMovementCountAggregateOutputType | null
+    _avg: InventoryMovementAvgAggregateOutputType | null
+    _sum: InventoryMovementSumAggregateOutputType | null
+    _min: InventoryMovementMinAggregateOutputType | null
+    _max: InventoryMovementMaxAggregateOutputType | null
+  }
+
+  type GetInventoryMovementGroupByPayload<T extends InventoryMovementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InventoryMovementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InventoryMovementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InventoryMovementGroupByOutputType[P]>
+            : GetScalarType<T[P], InventoryMovementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InventoryMovementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    medicationId?: boolean
+    userId?: boolean
+    quantityDelta?: boolean
+    reason?: boolean
+    createdAt?: boolean
+    medication?: boolean | MedicationDefaultArgs<ExtArgs>
+    user?: boolean | InventoryMovement$userArgs<ExtArgs>
+  }, ExtArgs["result"]["inventoryMovement"]>
+
+  export type InventoryMovementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    medicationId?: boolean
+    userId?: boolean
+    quantityDelta?: boolean
+    reason?: boolean
+    createdAt?: boolean
+    medication?: boolean | MedicationDefaultArgs<ExtArgs>
+    user?: boolean | InventoryMovement$userArgs<ExtArgs>
+  }, ExtArgs["result"]["inventoryMovement"]>
+
+  export type InventoryMovementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    medicationId?: boolean
+    userId?: boolean
+    quantityDelta?: boolean
+    reason?: boolean
+    createdAt?: boolean
+    medication?: boolean | MedicationDefaultArgs<ExtArgs>
+    user?: boolean | InventoryMovement$userArgs<ExtArgs>
+  }, ExtArgs["result"]["inventoryMovement"]>
+
+  export type InventoryMovementSelectScalar = {
+    id?: boolean
+    medicationId?: boolean
+    userId?: boolean
+    quantityDelta?: boolean
+    reason?: boolean
+    createdAt?: boolean
+  }
+
+  export type InventoryMovementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "medicationId" | "userId" | "quantityDelta" | "reason" | "createdAt", ExtArgs["result"]["inventoryMovement"]>
+  export type InventoryMovementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    medication?: boolean | MedicationDefaultArgs<ExtArgs>
+    user?: boolean | InventoryMovement$userArgs<ExtArgs>
+  }
+  export type InventoryMovementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    medication?: boolean | MedicationDefaultArgs<ExtArgs>
+    user?: boolean | InventoryMovement$userArgs<ExtArgs>
+  }
+  export type InventoryMovementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    medication?: boolean | MedicationDefaultArgs<ExtArgs>
+    user?: boolean | InventoryMovement$userArgs<ExtArgs>
+  }
+
+  export type $InventoryMovementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InventoryMovement"
+    objects: {
+      medication: Prisma.$MedicationPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      medicationId: string
+      userId: string | null
+      quantityDelta: number
+      reason: string
+      createdAt: Date
+    }, ExtArgs["result"]["inventoryMovement"]>
+    composites: {}
+  }
+
+  type InventoryMovementGetPayload<S extends boolean | null | undefined | InventoryMovementDefaultArgs> = $Result.GetResult<Prisma.$InventoryMovementPayload, S>
+
+  type InventoryMovementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InventoryMovementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InventoryMovementCountAggregateInputType | true
+    }
+
+  export interface InventoryMovementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InventoryMovement'], meta: { name: 'InventoryMovement' } }
+    /**
+     * Find zero or one InventoryMovement that matches the filter.
+     * @param {InventoryMovementFindUniqueArgs} args - Arguments to find a InventoryMovement
+     * @example
+     * // Get one InventoryMovement
+     * const inventoryMovement = await prisma.inventoryMovement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InventoryMovementFindUniqueArgs>(args: SelectSubset<T, InventoryMovementFindUniqueArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InventoryMovement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InventoryMovementFindUniqueOrThrowArgs} args - Arguments to find a InventoryMovement
+     * @example
+     * // Get one InventoryMovement
+     * const inventoryMovement = await prisma.inventoryMovement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InventoryMovementFindUniqueOrThrowArgs>(args: SelectSubset<T, InventoryMovementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InventoryMovement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementFindFirstArgs} args - Arguments to find a InventoryMovement
+     * @example
+     * // Get one InventoryMovement
+     * const inventoryMovement = await prisma.inventoryMovement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InventoryMovementFindFirstArgs>(args?: SelectSubset<T, InventoryMovementFindFirstArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InventoryMovement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementFindFirstOrThrowArgs} args - Arguments to find a InventoryMovement
+     * @example
+     * // Get one InventoryMovement
+     * const inventoryMovement = await prisma.inventoryMovement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InventoryMovementFindFirstOrThrowArgs>(args?: SelectSubset<T, InventoryMovementFindFirstOrThrowArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InventoryMovements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InventoryMovements
+     * const inventoryMovements = await prisma.inventoryMovement.findMany()
+     * 
+     * // Get first 10 InventoryMovements
+     * const inventoryMovements = await prisma.inventoryMovement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inventoryMovementWithIdOnly = await prisma.inventoryMovement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InventoryMovementFindManyArgs>(args?: SelectSubset<T, InventoryMovementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InventoryMovement.
+     * @param {InventoryMovementCreateArgs} args - Arguments to create a InventoryMovement.
+     * @example
+     * // Create one InventoryMovement
+     * const InventoryMovement = await prisma.inventoryMovement.create({
+     *   data: {
+     *     // ... data to create a InventoryMovement
+     *   }
+     * })
+     * 
+     */
+    create<T extends InventoryMovementCreateArgs>(args: SelectSubset<T, InventoryMovementCreateArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InventoryMovements.
+     * @param {InventoryMovementCreateManyArgs} args - Arguments to create many InventoryMovements.
+     * @example
+     * // Create many InventoryMovements
+     * const inventoryMovement = await prisma.inventoryMovement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InventoryMovementCreateManyArgs>(args?: SelectSubset<T, InventoryMovementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InventoryMovements and returns the data saved in the database.
+     * @param {InventoryMovementCreateManyAndReturnArgs} args - Arguments to create many InventoryMovements.
+     * @example
+     * // Create many InventoryMovements
+     * const inventoryMovement = await prisma.inventoryMovement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InventoryMovements and only return the `id`
+     * const inventoryMovementWithIdOnly = await prisma.inventoryMovement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InventoryMovementCreateManyAndReturnArgs>(args?: SelectSubset<T, InventoryMovementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InventoryMovement.
+     * @param {InventoryMovementDeleteArgs} args - Arguments to delete one InventoryMovement.
+     * @example
+     * // Delete one InventoryMovement
+     * const InventoryMovement = await prisma.inventoryMovement.delete({
+     *   where: {
+     *     // ... filter to delete one InventoryMovement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InventoryMovementDeleteArgs>(args: SelectSubset<T, InventoryMovementDeleteArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InventoryMovement.
+     * @param {InventoryMovementUpdateArgs} args - Arguments to update one InventoryMovement.
+     * @example
+     * // Update one InventoryMovement
+     * const inventoryMovement = await prisma.inventoryMovement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InventoryMovementUpdateArgs>(args: SelectSubset<T, InventoryMovementUpdateArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InventoryMovements.
+     * @param {InventoryMovementDeleteManyArgs} args - Arguments to filter InventoryMovements to delete.
+     * @example
+     * // Delete a few InventoryMovements
+     * const { count } = await prisma.inventoryMovement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InventoryMovementDeleteManyArgs>(args?: SelectSubset<T, InventoryMovementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InventoryMovements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InventoryMovements
+     * const inventoryMovement = await prisma.inventoryMovement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InventoryMovementUpdateManyArgs>(args: SelectSubset<T, InventoryMovementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InventoryMovements and returns the data updated in the database.
+     * @param {InventoryMovementUpdateManyAndReturnArgs} args - Arguments to update many InventoryMovements.
+     * @example
+     * // Update many InventoryMovements
+     * const inventoryMovement = await prisma.inventoryMovement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InventoryMovements and only return the `id`
+     * const inventoryMovementWithIdOnly = await prisma.inventoryMovement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InventoryMovementUpdateManyAndReturnArgs>(args: SelectSubset<T, InventoryMovementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InventoryMovement.
+     * @param {InventoryMovementUpsertArgs} args - Arguments to update or create a InventoryMovement.
+     * @example
+     * // Update or create a InventoryMovement
+     * const inventoryMovement = await prisma.inventoryMovement.upsert({
+     *   create: {
+     *     // ... data to create a InventoryMovement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InventoryMovement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InventoryMovementUpsertArgs>(args: SelectSubset<T, InventoryMovementUpsertArgs<ExtArgs>>): Prisma__InventoryMovementClient<$Result.GetResult<Prisma.$InventoryMovementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InventoryMovements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementCountArgs} args - Arguments to filter InventoryMovements to count.
+     * @example
+     * // Count the number of InventoryMovements
+     * const count = await prisma.inventoryMovement.count({
+     *   where: {
+     *     // ... the filter for the InventoryMovements we want to count
+     *   }
+     * })
+    **/
+    count<T extends InventoryMovementCountArgs>(
+      args?: Subset<T, InventoryMovementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InventoryMovementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InventoryMovement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InventoryMovementAggregateArgs>(args: Subset<T, InventoryMovementAggregateArgs>): Prisma.PrismaPromise<GetInventoryMovementAggregateType<T>>
+
+    /**
+     * Group by InventoryMovement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InventoryMovementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InventoryMovementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InventoryMovementGroupByArgs['orderBy'] }
+        : { orderBy?: InventoryMovementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InventoryMovementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInventoryMovementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InventoryMovement model
+   */
+  readonly fields: InventoryMovementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InventoryMovement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InventoryMovementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    medication<T extends MedicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MedicationDefaultArgs<ExtArgs>>): Prisma__MedicationClient<$Result.GetResult<Prisma.$MedicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends InventoryMovement$userArgs<ExtArgs> = {}>(args?: Subset<T, InventoryMovement$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InventoryMovement model
+   */
+  interface InventoryMovementFieldRefs {
+    readonly id: FieldRef<"InventoryMovement", 'String'>
+    readonly medicationId: FieldRef<"InventoryMovement", 'String'>
+    readonly userId: FieldRef<"InventoryMovement", 'String'>
+    readonly quantityDelta: FieldRef<"InventoryMovement", 'Int'>
+    readonly reason: FieldRef<"InventoryMovement", 'String'>
+    readonly createdAt: FieldRef<"InventoryMovement", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InventoryMovement findUnique
+   */
+  export type InventoryMovementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which InventoryMovement to fetch.
+     */
+    where: InventoryMovementWhereUniqueInput
+  }
+
+  /**
+   * InventoryMovement findUniqueOrThrow
+   */
+  export type InventoryMovementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which InventoryMovement to fetch.
+     */
+    where: InventoryMovementWhereUniqueInput
+  }
+
+  /**
+   * InventoryMovement findFirst
+   */
+  export type InventoryMovementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which InventoryMovement to fetch.
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryMovements to fetch.
+     */
+    orderBy?: InventoryMovementOrderByWithRelationInput | InventoryMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InventoryMovements.
+     */
+    cursor?: InventoryMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InventoryMovements.
+     */
+    distinct?: InventoryMovementScalarFieldEnum | InventoryMovementScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryMovement findFirstOrThrow
+   */
+  export type InventoryMovementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which InventoryMovement to fetch.
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryMovements to fetch.
+     */
+    orderBy?: InventoryMovementOrderByWithRelationInput | InventoryMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InventoryMovements.
+     */
+    cursor?: InventoryMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InventoryMovements.
+     */
+    distinct?: InventoryMovementScalarFieldEnum | InventoryMovementScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryMovement findMany
+   */
+  export type InventoryMovementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which InventoryMovements to fetch.
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InventoryMovements to fetch.
+     */
+    orderBy?: InventoryMovementOrderByWithRelationInput | InventoryMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InventoryMovements.
+     */
+    cursor?: InventoryMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InventoryMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InventoryMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InventoryMovements.
+     */
+    distinct?: InventoryMovementScalarFieldEnum | InventoryMovementScalarFieldEnum[]
+  }
+
+  /**
+   * InventoryMovement create
+   */
+  export type InventoryMovementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InventoryMovement.
+     */
+    data: XOR<InventoryMovementCreateInput, InventoryMovementUncheckedCreateInput>
+  }
+
+  /**
+   * InventoryMovement createMany
+   */
+  export type InventoryMovementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InventoryMovements.
+     */
+    data: InventoryMovementCreateManyInput | InventoryMovementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InventoryMovement createManyAndReturn
+   */
+  export type InventoryMovementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * The data used to create many InventoryMovements.
+     */
+    data: InventoryMovementCreateManyInput | InventoryMovementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InventoryMovement update
+   */
+  export type InventoryMovementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InventoryMovement.
+     */
+    data: XOR<InventoryMovementUpdateInput, InventoryMovementUncheckedUpdateInput>
+    /**
+     * Choose, which InventoryMovement to update.
+     */
+    where: InventoryMovementWhereUniqueInput
+  }
+
+  /**
+   * InventoryMovement updateMany
+   */
+  export type InventoryMovementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InventoryMovements.
+     */
+    data: XOR<InventoryMovementUpdateManyMutationInput, InventoryMovementUncheckedUpdateManyInput>
+    /**
+     * Filter which InventoryMovements to update
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * Limit how many InventoryMovements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InventoryMovement updateManyAndReturn
+   */
+  export type InventoryMovementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * The data used to update InventoryMovements.
+     */
+    data: XOR<InventoryMovementUpdateManyMutationInput, InventoryMovementUncheckedUpdateManyInput>
+    /**
+     * Filter which InventoryMovements to update
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * Limit how many InventoryMovements to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InventoryMovement upsert
+   */
+  export type InventoryMovementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InventoryMovement to update in case it exists.
+     */
+    where: InventoryMovementWhereUniqueInput
+    /**
+     * In case the InventoryMovement found by the `where` argument doesn't exist, create a new InventoryMovement with this data.
+     */
+    create: XOR<InventoryMovementCreateInput, InventoryMovementUncheckedCreateInput>
+    /**
+     * In case the InventoryMovement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InventoryMovementUpdateInput, InventoryMovementUncheckedUpdateInput>
+  }
+
+  /**
+   * InventoryMovement delete
+   */
+  export type InventoryMovementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
+    /**
+     * Filter which InventoryMovement to delete.
+     */
+    where: InventoryMovementWhereUniqueInput
+  }
+
+  /**
+   * InventoryMovement deleteMany
+   */
+  export type InventoryMovementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InventoryMovements to delete
+     */
+    where?: InventoryMovementWhereInput
+    /**
+     * Limit how many InventoryMovements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InventoryMovement.user
+   */
+  export type InventoryMovement$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * InventoryMovement without action
+   */
+  export type InventoryMovementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InventoryMovement
+     */
+    select?: InventoryMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InventoryMovement
+     */
+    omit?: InventoryMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InventoryMovementInclude<ExtArgs> | null
   }
 
 
@@ -16282,6 +17584,18 @@ export namespace Prisma {
   export type MedicationScalarFieldEnum = (typeof MedicationScalarFieldEnum)[keyof typeof MedicationScalarFieldEnum]
 
 
+  export const InventoryMovementScalarFieldEnum: {
+    id: 'id',
+    medicationId: 'medicationId',
+    userId: 'userId',
+    quantityDelta: 'quantityDelta',
+    reason: 'reason',
+    createdAt: 'createdAt'
+  };
+
+  export type InventoryMovementScalarFieldEnum = (typeof InventoryMovementScalarFieldEnum)[keyof typeof InventoryMovementScalarFieldEnum]
+
+
   export const AuditLogScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -16560,6 +17874,7 @@ export namespace Prisma {
     patient?: XOR<PatientNullableScalarRelationFilter, PatientWhereInput> | null
     nurse?: XOR<NurseNullableScalarRelationFilter, NurseWhereInput> | null
     auditLogs?: AuditLogListRelationFilter
+    inventoryMovements?: InventoryMovementListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -16574,6 +17889,7 @@ export namespace Prisma {
     patient?: PatientOrderByWithRelationInput
     nurse?: NurseOrderByWithRelationInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
+    inventoryMovements?: InventoryMovementOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -16591,6 +17907,7 @@ export namespace Prisma {
     patient?: XOR<PatientNullableScalarRelationFilter, PatientWhereInput> | null
     nurse?: XOR<NurseNullableScalarRelationFilter, NurseWhereInput> | null
     auditLogs?: AuditLogListRelationFilter
+    inventoryMovements?: InventoryMovementListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -17218,6 +18535,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Medication"> | Date | string
     updatedAt?: DateTimeFilter<"Medication"> | Date | string
     prescriptionMedications?: PrescriptionMedicationListRelationFilter
+    inventoryMovements?: InventoryMovementListRelationFilter
   }
 
   export type MedicationOrderByWithRelationInput = {
@@ -17229,6 +18547,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     prescriptionMedications?: PrescriptionMedicationOrderByRelationAggregateInput
+    inventoryMovements?: InventoryMovementOrderByRelationAggregateInput
   }
 
   export type MedicationWhereUniqueInput = Prisma.AtLeast<{
@@ -17243,6 +18562,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Medication"> | Date | string
     updatedAt?: DateTimeFilter<"Medication"> | Date | string
     prescriptionMedications?: PrescriptionMedicationListRelationFilter
+    inventoryMovements?: InventoryMovementListRelationFilter
   }, "id">
 
   export type MedicationOrderByWithAggregationInput = {
@@ -17271,6 +18591,71 @@ export namespace Prisma {
     reorderLevel?: IntWithAggregatesFilter<"Medication"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Medication"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Medication"> | Date | string
+  }
+
+  export type InventoryMovementWhereInput = {
+    AND?: InventoryMovementWhereInput | InventoryMovementWhereInput[]
+    OR?: InventoryMovementWhereInput[]
+    NOT?: InventoryMovementWhereInput | InventoryMovementWhereInput[]
+    id?: StringFilter<"InventoryMovement"> | string
+    medicationId?: StringFilter<"InventoryMovement"> | string
+    userId?: StringNullableFilter<"InventoryMovement"> | string | null
+    quantityDelta?: IntFilter<"InventoryMovement"> | number
+    reason?: StringFilter<"InventoryMovement"> | string
+    createdAt?: DateTimeFilter<"InventoryMovement"> | Date | string
+    medication?: XOR<MedicationScalarRelationFilter, MedicationWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type InventoryMovementOrderByWithRelationInput = {
+    id?: SortOrder
+    medicationId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    quantityDelta?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+    medication?: MedicationOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type InventoryMovementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InventoryMovementWhereInput | InventoryMovementWhereInput[]
+    OR?: InventoryMovementWhereInput[]
+    NOT?: InventoryMovementWhereInput | InventoryMovementWhereInput[]
+    medicationId?: StringFilter<"InventoryMovement"> | string
+    userId?: StringNullableFilter<"InventoryMovement"> | string | null
+    quantityDelta?: IntFilter<"InventoryMovement"> | number
+    reason?: StringFilter<"InventoryMovement"> | string
+    createdAt?: DateTimeFilter<"InventoryMovement"> | Date | string
+    medication?: XOR<MedicationScalarRelationFilter, MedicationWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type InventoryMovementOrderByWithAggregationInput = {
+    id?: SortOrder
+    medicationId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    quantityDelta?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+    _count?: InventoryMovementCountOrderByAggregateInput
+    _avg?: InventoryMovementAvgOrderByAggregateInput
+    _max?: InventoryMovementMaxOrderByAggregateInput
+    _min?: InventoryMovementMinOrderByAggregateInput
+    _sum?: InventoryMovementSumOrderByAggregateInput
+  }
+
+  export type InventoryMovementScalarWhereWithAggregatesInput = {
+    AND?: InventoryMovementScalarWhereWithAggregatesInput | InventoryMovementScalarWhereWithAggregatesInput[]
+    OR?: InventoryMovementScalarWhereWithAggregatesInput[]
+    NOT?: InventoryMovementScalarWhereWithAggregatesInput | InventoryMovementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InventoryMovement"> | string
+    medicationId?: StringWithAggregatesFilter<"InventoryMovement"> | string
+    userId?: StringNullableWithAggregatesFilter<"InventoryMovement"> | string | null
+    quantityDelta?: IntWithAggregatesFilter<"InventoryMovement"> | number
+    reason?: StringWithAggregatesFilter<"InventoryMovement"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"InventoryMovement"> | Date | string
   }
 
   export type AuditLogWhereInput = {
@@ -17490,6 +18875,7 @@ export namespace Prisma {
     patient?: PatientCreateNestedOneWithoutUserInput
     nurse?: NurseCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -17504,6 +18890,7 @@ export namespace Prisma {
     patient?: PatientUncheckedCreateNestedOneWithoutUserInput
     nurse?: NurseUncheckedCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -17518,6 +18905,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneWithoutUserNestedInput
     nurse?: NurseUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -17532,6 +18920,7 @@ export namespace Prisma {
     patient?: PatientUncheckedUpdateOneWithoutUserNestedInput
     nurse?: NurseUncheckedUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -18203,6 +19592,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptionMedications?: PrescriptionMedicationCreateNestedManyWithoutMedicationInput
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutMedicationInput
   }
 
   export type MedicationUncheckedCreateInput = {
@@ -18214,6 +19604,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     prescriptionMedications?: PrescriptionMedicationUncheckedCreateNestedManyWithoutMedicationInput
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutMedicationInput
   }
 
   export type MedicationUpdateInput = {
@@ -18225,6 +19616,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptionMedications?: PrescriptionMedicationUpdateManyWithoutMedicationNestedInput
+    inventoryMovements?: InventoryMovementUpdateManyWithoutMedicationNestedInput
   }
 
   export type MedicationUncheckedUpdateInput = {
@@ -18236,6 +19628,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     prescriptionMedications?: PrescriptionMedicationUncheckedUpdateManyWithoutMedicationNestedInput
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutMedicationNestedInput
   }
 
   export type MedicationCreateManyInput = {
@@ -18266,6 +19659,67 @@ export namespace Prisma {
     reorderLevel?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InventoryMovementCreateInput = {
+    id?: string
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+    medication: MedicationCreateNestedOneWithoutInventoryMovementsInput
+    user?: UserCreateNestedOneWithoutInventoryMovementsInput
+  }
+
+  export type InventoryMovementUncheckedCreateInput = {
+    id?: string
+    medicationId: string
+    userId?: string | null
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+  }
+
+  export type InventoryMovementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    medication?: MedicationUpdateOneRequiredWithoutInventoryMovementsNestedInput
+    user?: UserUpdateOneWithoutInventoryMovementsNestedInput
+  }
+
+  export type InventoryMovementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicationId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InventoryMovementCreateManyInput = {
+    id?: string
+    medicationId: string
+    userId?: string | null
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+  }
+
+  export type InventoryMovementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InventoryMovementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicationId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuditLogCreateInput = {
@@ -18536,7 +19990,17 @@ export namespace Prisma {
     none?: AuditLogWhereInput
   }
 
+  export type InventoryMovementListRelationFilter = {
+    every?: InventoryMovementWhereInput
+    some?: InventoryMovementWhereInput
+    none?: InventoryMovementWhereInput
+  }
+
   export type AuditLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InventoryMovementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -19244,6 +20708,51 @@ export namespace Prisma {
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
   }
+
+  export type MedicationScalarRelationFilter = {
+    is?: MedicationWhereInput
+    isNot?: MedicationWhereInput
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type InventoryMovementCountOrderByAggregateInput = {
+    id?: SortOrder
+    medicationId?: SortOrder
+    userId?: SortOrder
+    quantityDelta?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InventoryMovementAvgOrderByAggregateInput = {
+    quantityDelta?: SortOrder
+  }
+
+  export type InventoryMovementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    medicationId?: SortOrder
+    userId?: SortOrder
+    quantityDelta?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InventoryMovementMinOrderByAggregateInput = {
+    id?: SortOrder
+    medicationId?: SortOrder
+    userId?: SortOrder
+    quantityDelta?: SortOrder
+    reason?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InventoryMovementSumOrderByAggregateInput = {
+    quantityDelta?: SortOrder
+  }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -19266,11 +20775,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
   }
 
   export type AuditLogCountOrderByAggregateInput = {
@@ -19379,11 +20883,6 @@ export namespace Prisma {
     isNot?: PrescriptionWhereInput
   }
 
-  export type MedicationScalarRelationFilter = {
-    is?: MedicationWhereInput
-    isNot?: MedicationWhereInput
-  }
-
   export type PrescriptionMedicationPrescriptionIdMedicationIdCompoundUniqueInput = {
     prescriptionId: string
     medicationId: string
@@ -19444,6 +20943,13 @@ export namespace Prisma {
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
+  export type InventoryMovementCreateNestedManyWithoutUserInput = {
+    create?: XOR<InventoryMovementCreateWithoutUserInput, InventoryMovementUncheckedCreateWithoutUserInput> | InventoryMovementCreateWithoutUserInput[] | InventoryMovementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutUserInput | InventoryMovementCreateOrConnectWithoutUserInput[]
+    createMany?: InventoryMovementCreateManyUserInputEnvelope
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+  }
+
   export type DoctorUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<DoctorCreateWithoutUserInput, DoctorUncheckedCreateWithoutUserInput>
     connectOrCreate?: DoctorCreateOrConnectWithoutUserInput
@@ -19467,6 +20973,13 @@ export namespace Prisma {
     connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
     createMany?: AuditLogCreateManyUserInputEnvelope
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type InventoryMovementUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<InventoryMovementCreateWithoutUserInput, InventoryMovementUncheckedCreateWithoutUserInput> | InventoryMovementCreateWithoutUserInput[] | InventoryMovementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutUserInput | InventoryMovementCreateOrConnectWithoutUserInput[]
+    createMany?: InventoryMovementCreateManyUserInputEnvelope
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -19529,6 +21042,20 @@ export namespace Prisma {
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
+  export type InventoryMovementUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InventoryMovementCreateWithoutUserInput, InventoryMovementUncheckedCreateWithoutUserInput> | InventoryMovementCreateWithoutUserInput[] | InventoryMovementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutUserInput | InventoryMovementCreateOrConnectWithoutUserInput[]
+    upsert?: InventoryMovementUpsertWithWhereUniqueWithoutUserInput | InventoryMovementUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InventoryMovementCreateManyUserInputEnvelope
+    set?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    disconnect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    delete?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    update?: InventoryMovementUpdateWithWhereUniqueWithoutUserInput | InventoryMovementUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InventoryMovementUpdateManyWithWhereWithoutUserInput | InventoryMovementUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
+  }
+
   export type DoctorUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<DoctorCreateWithoutUserInput, DoctorUncheckedCreateWithoutUserInput>
     connectOrCreate?: DoctorCreateOrConnectWithoutUserInput
@@ -19571,6 +21098,20 @@ export namespace Prisma {
     update?: AuditLogUpdateWithWhereUniqueWithoutUserInput | AuditLogUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AuditLogUpdateManyWithWhereWithoutUserInput | AuditLogUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type InventoryMovementUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InventoryMovementCreateWithoutUserInput, InventoryMovementUncheckedCreateWithoutUserInput> | InventoryMovementCreateWithoutUserInput[] | InventoryMovementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutUserInput | InventoryMovementCreateOrConnectWithoutUserInput[]
+    upsert?: InventoryMovementUpsertWithWhereUniqueWithoutUserInput | InventoryMovementUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InventoryMovementCreateManyUserInputEnvelope
+    set?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    disconnect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    delete?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    update?: InventoryMovementUpdateWithWhereUniqueWithoutUserInput | InventoryMovementUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InventoryMovementUpdateManyWithWhereWithoutUserInput | InventoryMovementUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutNurseInput = {
@@ -20286,11 +21827,25 @@ export namespace Prisma {
     connect?: PrescriptionMedicationWhereUniqueInput | PrescriptionMedicationWhereUniqueInput[]
   }
 
+  export type InventoryMovementCreateNestedManyWithoutMedicationInput = {
+    create?: XOR<InventoryMovementCreateWithoutMedicationInput, InventoryMovementUncheckedCreateWithoutMedicationInput> | InventoryMovementCreateWithoutMedicationInput[] | InventoryMovementUncheckedCreateWithoutMedicationInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutMedicationInput | InventoryMovementCreateOrConnectWithoutMedicationInput[]
+    createMany?: InventoryMovementCreateManyMedicationInputEnvelope
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+  }
+
   export type PrescriptionMedicationUncheckedCreateNestedManyWithoutMedicationInput = {
     create?: XOR<PrescriptionMedicationCreateWithoutMedicationInput, PrescriptionMedicationUncheckedCreateWithoutMedicationInput> | PrescriptionMedicationCreateWithoutMedicationInput[] | PrescriptionMedicationUncheckedCreateWithoutMedicationInput[]
     connectOrCreate?: PrescriptionMedicationCreateOrConnectWithoutMedicationInput | PrescriptionMedicationCreateOrConnectWithoutMedicationInput[]
     createMany?: PrescriptionMedicationCreateManyMedicationInputEnvelope
     connect?: PrescriptionMedicationWhereUniqueInput | PrescriptionMedicationWhereUniqueInput[]
+  }
+
+  export type InventoryMovementUncheckedCreateNestedManyWithoutMedicationInput = {
+    create?: XOR<InventoryMovementCreateWithoutMedicationInput, InventoryMovementUncheckedCreateWithoutMedicationInput> | InventoryMovementCreateWithoutMedicationInput[] | InventoryMovementUncheckedCreateWithoutMedicationInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutMedicationInput | InventoryMovementCreateOrConnectWithoutMedicationInput[]
+    createMany?: InventoryMovementCreateManyMedicationInputEnvelope
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -20315,6 +21870,20 @@ export namespace Prisma {
     deleteMany?: PrescriptionMedicationScalarWhereInput | PrescriptionMedicationScalarWhereInput[]
   }
 
+  export type InventoryMovementUpdateManyWithoutMedicationNestedInput = {
+    create?: XOR<InventoryMovementCreateWithoutMedicationInput, InventoryMovementUncheckedCreateWithoutMedicationInput> | InventoryMovementCreateWithoutMedicationInput[] | InventoryMovementUncheckedCreateWithoutMedicationInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutMedicationInput | InventoryMovementCreateOrConnectWithoutMedicationInput[]
+    upsert?: InventoryMovementUpsertWithWhereUniqueWithoutMedicationInput | InventoryMovementUpsertWithWhereUniqueWithoutMedicationInput[]
+    createMany?: InventoryMovementCreateManyMedicationInputEnvelope
+    set?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    disconnect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    delete?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    update?: InventoryMovementUpdateWithWhereUniqueWithoutMedicationInput | InventoryMovementUpdateWithWhereUniqueWithoutMedicationInput[]
+    updateMany?: InventoryMovementUpdateManyWithWhereWithoutMedicationInput | InventoryMovementUpdateManyWithWhereWithoutMedicationInput[]
+    deleteMany?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
+  }
+
   export type PrescriptionMedicationUncheckedUpdateManyWithoutMedicationNestedInput = {
     create?: XOR<PrescriptionMedicationCreateWithoutMedicationInput, PrescriptionMedicationUncheckedCreateWithoutMedicationInput> | PrescriptionMedicationCreateWithoutMedicationInput[] | PrescriptionMedicationUncheckedCreateWithoutMedicationInput[]
     connectOrCreate?: PrescriptionMedicationCreateOrConnectWithoutMedicationInput | PrescriptionMedicationCreateOrConnectWithoutMedicationInput[]
@@ -20327,6 +21896,50 @@ export namespace Prisma {
     update?: PrescriptionMedicationUpdateWithWhereUniqueWithoutMedicationInput | PrescriptionMedicationUpdateWithWhereUniqueWithoutMedicationInput[]
     updateMany?: PrescriptionMedicationUpdateManyWithWhereWithoutMedicationInput | PrescriptionMedicationUpdateManyWithWhereWithoutMedicationInput[]
     deleteMany?: PrescriptionMedicationScalarWhereInput | PrescriptionMedicationScalarWhereInput[]
+  }
+
+  export type InventoryMovementUncheckedUpdateManyWithoutMedicationNestedInput = {
+    create?: XOR<InventoryMovementCreateWithoutMedicationInput, InventoryMovementUncheckedCreateWithoutMedicationInput> | InventoryMovementCreateWithoutMedicationInput[] | InventoryMovementUncheckedCreateWithoutMedicationInput[]
+    connectOrCreate?: InventoryMovementCreateOrConnectWithoutMedicationInput | InventoryMovementCreateOrConnectWithoutMedicationInput[]
+    upsert?: InventoryMovementUpsertWithWhereUniqueWithoutMedicationInput | InventoryMovementUpsertWithWhereUniqueWithoutMedicationInput[]
+    createMany?: InventoryMovementCreateManyMedicationInputEnvelope
+    set?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    disconnect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    delete?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    connect?: InventoryMovementWhereUniqueInput | InventoryMovementWhereUniqueInput[]
+    update?: InventoryMovementUpdateWithWhereUniqueWithoutMedicationInput | InventoryMovementUpdateWithWhereUniqueWithoutMedicationInput[]
+    updateMany?: InventoryMovementUpdateManyWithWhereWithoutMedicationInput | InventoryMovementUpdateManyWithWhereWithoutMedicationInput[]
+    deleteMany?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
+  }
+
+  export type MedicationCreateNestedOneWithoutInventoryMovementsInput = {
+    create?: XOR<MedicationCreateWithoutInventoryMovementsInput, MedicationUncheckedCreateWithoutInventoryMovementsInput>
+    connectOrCreate?: MedicationCreateOrConnectWithoutInventoryMovementsInput
+    connect?: MedicationWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutInventoryMovementsInput = {
+    create?: XOR<UserCreateWithoutInventoryMovementsInput, UserUncheckedCreateWithoutInventoryMovementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInventoryMovementsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type MedicationUpdateOneRequiredWithoutInventoryMovementsNestedInput = {
+    create?: XOR<MedicationCreateWithoutInventoryMovementsInput, MedicationUncheckedCreateWithoutInventoryMovementsInput>
+    connectOrCreate?: MedicationCreateOrConnectWithoutInventoryMovementsInput
+    upsert?: MedicationUpsertWithoutInventoryMovementsInput
+    connect?: MedicationWhereUniqueInput
+    update?: XOR<XOR<MedicationUpdateToOneWithWhereWithoutInventoryMovementsInput, MedicationUpdateWithoutInventoryMovementsInput>, MedicationUncheckedUpdateWithoutInventoryMovementsInput>
+  }
+
+  export type UserUpdateOneWithoutInventoryMovementsNestedInput = {
+    create?: XOR<UserCreateWithoutInventoryMovementsInput, UserUncheckedCreateWithoutInventoryMovementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInventoryMovementsInput
+    upsert?: UserUpsertWithoutInventoryMovementsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInventoryMovementsInput, UserUpdateWithoutInventoryMovementsInput>, UserUncheckedUpdateWithoutInventoryMovementsInput>
   }
 
   export type UserCreateNestedOneWithoutAuditLogsInput = {
@@ -20904,6 +22517,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InventoryMovementCreateWithoutUserInput = {
+    id?: string
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+    medication: MedicationCreateNestedOneWithoutInventoryMovementsInput
+  }
+
+  export type InventoryMovementUncheckedCreateWithoutUserInput = {
+    id?: string
+    medicationId: string
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+  }
+
+  export type InventoryMovementCreateOrConnectWithoutUserInput = {
+    where: InventoryMovementWhereUniqueInput
+    create: XOR<InventoryMovementCreateWithoutUserInput, InventoryMovementUncheckedCreateWithoutUserInput>
+  }
+
+  export type InventoryMovementCreateManyUserInputEnvelope = {
+    data: InventoryMovementCreateManyUserInput | InventoryMovementCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DoctorUpsertWithoutUserInput = {
     update: XOR<DoctorUpdateWithoutUserInput, DoctorUncheckedUpdateWithoutUserInput>
     create: XOR<DoctorCreateWithoutUserInput, DoctorUncheckedCreateWithoutUserInput>
@@ -21048,6 +22687,34 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
   }
 
+  export type InventoryMovementUpsertWithWhereUniqueWithoutUserInput = {
+    where: InventoryMovementWhereUniqueInput
+    update: XOR<InventoryMovementUpdateWithoutUserInput, InventoryMovementUncheckedUpdateWithoutUserInput>
+    create: XOR<InventoryMovementCreateWithoutUserInput, InventoryMovementUncheckedCreateWithoutUserInput>
+  }
+
+  export type InventoryMovementUpdateWithWhereUniqueWithoutUserInput = {
+    where: InventoryMovementWhereUniqueInput
+    data: XOR<InventoryMovementUpdateWithoutUserInput, InventoryMovementUncheckedUpdateWithoutUserInput>
+  }
+
+  export type InventoryMovementUpdateManyWithWhereWithoutUserInput = {
+    where: InventoryMovementScalarWhereInput
+    data: XOR<InventoryMovementUpdateManyMutationInput, InventoryMovementUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type InventoryMovementScalarWhereInput = {
+    AND?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
+    OR?: InventoryMovementScalarWhereInput[]
+    NOT?: InventoryMovementScalarWhereInput | InventoryMovementScalarWhereInput[]
+    id?: StringFilter<"InventoryMovement"> | string
+    medicationId?: StringFilter<"InventoryMovement"> | string
+    userId?: StringNullableFilter<"InventoryMovement"> | string | null
+    quantityDelta?: IntFilter<"InventoryMovement"> | number
+    reason?: StringFilter<"InventoryMovement"> | string
+    createdAt?: DateTimeFilter<"InventoryMovement"> | Date | string
+  }
+
   export type UserCreateWithoutNurseInput = {
     id?: string
     email: string
@@ -21059,6 +22726,7 @@ export namespace Prisma {
     doctor?: DoctorCreateNestedOneWithoutUserInput
     patient?: PatientCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNurseInput = {
@@ -21072,6 +22740,7 @@ export namespace Prisma {
     doctor?: DoctorUncheckedCreateNestedOneWithoutUserInput
     patient?: PatientUncheckedCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNurseInput = {
@@ -21130,6 +22799,7 @@ export namespace Prisma {
     doctor?: DoctorUpdateOneWithoutUserNestedInput
     patient?: PatientUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNurseInput = {
@@ -21143,6 +22813,7 @@ export namespace Prisma {
     doctor?: DoctorUncheckedUpdateOneWithoutUserNestedInput
     patient?: PatientUncheckedUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DepartmentUpsertWithoutNursesInput = {
@@ -21465,6 +23136,7 @@ export namespace Prisma {
     patient?: PatientCreateNestedOneWithoutUserInput
     nurse?: NurseCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDoctorInput = {
@@ -21478,6 +23150,7 @@ export namespace Prisma {
     patient?: PatientUncheckedCreateNestedOneWithoutUserInput
     nurse?: NurseUncheckedCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDoctorInput = {
@@ -21640,6 +23313,7 @@ export namespace Prisma {
     patient?: PatientUpdateOneWithoutUserNestedInput
     nurse?: NurseUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDoctorInput = {
@@ -21653,6 +23327,7 @@ export namespace Prisma {
     patient?: PatientUncheckedUpdateOneWithoutUserNestedInput
     nurse?: NurseUncheckedUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DepartmentUpsertWithoutDoctorsInput = {
@@ -21780,6 +23455,7 @@ export namespace Prisma {
     doctor?: DoctorCreateNestedOneWithoutUserInput
     nurse?: NurseCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPatientInput = {
@@ -21793,6 +23469,7 @@ export namespace Prisma {
     doctor?: DoctorUncheckedCreateNestedOneWithoutUserInput
     nurse?: NurseUncheckedCreateNestedOneWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPatientInput = {
@@ -21955,6 +23632,7 @@ export namespace Prisma {
     doctor?: DoctorUpdateOneWithoutUserNestedInput
     nurse?: NurseUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPatientInput = {
@@ -21968,6 +23646,7 @@ export namespace Prisma {
     doctor?: DoctorUncheckedUpdateOneWithoutUserNestedInput
     nurse?: NurseUncheckedUpdateOneWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DepartmentUpsertWithoutPatientsInput = {
@@ -22721,6 +24400,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InventoryMovementCreateWithoutMedicationInput = {
+    id?: string
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutInventoryMovementsInput
+  }
+
+  export type InventoryMovementUncheckedCreateWithoutMedicationInput = {
+    id?: string
+    userId?: string | null
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+  }
+
+  export type InventoryMovementCreateOrConnectWithoutMedicationInput = {
+    where: InventoryMovementWhereUniqueInput
+    create: XOR<InventoryMovementCreateWithoutMedicationInput, InventoryMovementUncheckedCreateWithoutMedicationInput>
+  }
+
+  export type InventoryMovementCreateManyMedicationInputEnvelope = {
+    data: InventoryMovementCreateManyMedicationInput | InventoryMovementCreateManyMedicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PrescriptionMedicationUpsertWithWhereUniqueWithoutMedicationInput = {
     where: PrescriptionMedicationWhereUniqueInput
     update: XOR<PrescriptionMedicationUpdateWithoutMedicationInput, PrescriptionMedicationUncheckedUpdateWithoutMedicationInput>
@@ -22750,6 +24455,154 @@ export namespace Prisma {
     notes?: StringNullableFilter<"PrescriptionMedication"> | string | null
   }
 
+  export type InventoryMovementUpsertWithWhereUniqueWithoutMedicationInput = {
+    where: InventoryMovementWhereUniqueInput
+    update: XOR<InventoryMovementUpdateWithoutMedicationInput, InventoryMovementUncheckedUpdateWithoutMedicationInput>
+    create: XOR<InventoryMovementCreateWithoutMedicationInput, InventoryMovementUncheckedCreateWithoutMedicationInput>
+  }
+
+  export type InventoryMovementUpdateWithWhereUniqueWithoutMedicationInput = {
+    where: InventoryMovementWhereUniqueInput
+    data: XOR<InventoryMovementUpdateWithoutMedicationInput, InventoryMovementUncheckedUpdateWithoutMedicationInput>
+  }
+
+  export type InventoryMovementUpdateManyWithWhereWithoutMedicationInput = {
+    where: InventoryMovementScalarWhereInput
+    data: XOR<InventoryMovementUpdateManyMutationInput, InventoryMovementUncheckedUpdateManyWithoutMedicationInput>
+  }
+
+  export type MedicationCreateWithoutInventoryMovementsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    stockQuantity?: number
+    reorderLevel?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    prescriptionMedications?: PrescriptionMedicationCreateNestedManyWithoutMedicationInput
+  }
+
+  export type MedicationUncheckedCreateWithoutInventoryMovementsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    stockQuantity?: number
+    reorderLevel?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    prescriptionMedications?: PrescriptionMedicationUncheckedCreateNestedManyWithoutMedicationInput
+  }
+
+  export type MedicationCreateOrConnectWithoutInventoryMovementsInput = {
+    where: MedicationWhereUniqueInput
+    create: XOR<MedicationCreateWithoutInventoryMovementsInput, MedicationUncheckedCreateWithoutInventoryMovementsInput>
+  }
+
+  export type UserCreateWithoutInventoryMovementsInput = {
+    id?: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    doctor?: DoctorCreateNestedOneWithoutUserInput
+    patient?: PatientCreateNestedOneWithoutUserInput
+    nurse?: NurseCreateNestedOneWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutInventoryMovementsInput = {
+    id?: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    doctor?: DoctorUncheckedCreateNestedOneWithoutUserInput
+    patient?: PatientUncheckedCreateNestedOneWithoutUserInput
+    nurse?: NurseUncheckedCreateNestedOneWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutInventoryMovementsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInventoryMovementsInput, UserUncheckedCreateWithoutInventoryMovementsInput>
+  }
+
+  export type MedicationUpsertWithoutInventoryMovementsInput = {
+    update: XOR<MedicationUpdateWithoutInventoryMovementsInput, MedicationUncheckedUpdateWithoutInventoryMovementsInput>
+    create: XOR<MedicationCreateWithoutInventoryMovementsInput, MedicationUncheckedCreateWithoutInventoryMovementsInput>
+    where?: MedicationWhereInput
+  }
+
+  export type MedicationUpdateToOneWithWhereWithoutInventoryMovementsInput = {
+    where?: MedicationWhereInput
+    data: XOR<MedicationUpdateWithoutInventoryMovementsInput, MedicationUncheckedUpdateWithoutInventoryMovementsInput>
+  }
+
+  export type MedicationUpdateWithoutInventoryMovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    stockQuantity?: IntFieldUpdateOperationsInput | number
+    reorderLevel?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    prescriptionMedications?: PrescriptionMedicationUpdateManyWithoutMedicationNestedInput
+  }
+
+  export type MedicationUncheckedUpdateWithoutInventoryMovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    stockQuantity?: IntFieldUpdateOperationsInput | number
+    reorderLevel?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    prescriptionMedications?: PrescriptionMedicationUncheckedUpdateManyWithoutMedicationNestedInput
+  }
+
+  export type UserUpsertWithoutInventoryMovementsInput = {
+    update: XOR<UserUpdateWithoutInventoryMovementsInput, UserUncheckedUpdateWithoutInventoryMovementsInput>
+    create: XOR<UserCreateWithoutInventoryMovementsInput, UserUncheckedCreateWithoutInventoryMovementsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInventoryMovementsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInventoryMovementsInput, UserUncheckedUpdateWithoutInventoryMovementsInput>
+  }
+
+  export type UserUpdateWithoutInventoryMovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doctor?: DoctorUpdateOneWithoutUserNestedInput
+    patient?: PatientUpdateOneWithoutUserNestedInput
+    nurse?: NurseUpdateOneWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInventoryMovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doctor?: DoctorUncheckedUpdateOneWithoutUserNestedInput
+    patient?: PatientUncheckedUpdateOneWithoutUserNestedInput
+    nurse?: NurseUncheckedUpdateOneWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutAuditLogsInput = {
     id?: string
     email: string
@@ -22761,6 +24614,7 @@ export namespace Prisma {
     doctor?: DoctorCreateNestedOneWithoutUserInput
     patient?: PatientCreateNestedOneWithoutUserInput
     nurse?: NurseCreateNestedOneWithoutUserInput
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -22774,6 +24628,7 @@ export namespace Prisma {
     doctor?: DoctorUncheckedCreateNestedOneWithoutUserInput
     patient?: PatientUncheckedCreateNestedOneWithoutUserInput
     nurse?: NurseUncheckedCreateNestedOneWithoutUserInput
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -22803,6 +24658,7 @@ export namespace Prisma {
     doctor?: DoctorUpdateOneWithoutUserNestedInput
     patient?: PatientUpdateOneWithoutUserNestedInput
     nurse?: NurseUpdateOneWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -22816,6 +24672,7 @@ export namespace Prisma {
     doctor?: DoctorUncheckedUpdateOneWithoutUserNestedInput
     patient?: PatientUncheckedUpdateOneWithoutUserNestedInput
     nurse?: NurseUncheckedUpdateOneWithoutUserNestedInput
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PatientCreateWithoutPrescriptionsInput = {
@@ -23051,6 +24908,7 @@ export namespace Prisma {
     reorderLevel?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    inventoryMovements?: InventoryMovementCreateNestedManyWithoutMedicationInput
   }
 
   export type MedicationUncheckedCreateWithoutPrescriptionMedicationsInput = {
@@ -23061,6 +24919,7 @@ export namespace Prisma {
     reorderLevel?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    inventoryMovements?: InventoryMovementUncheckedCreateNestedManyWithoutMedicationInput
   }
 
   export type MedicationCreateOrConnectWithoutPrescriptionMedicationsInput = {
@@ -23118,6 +24977,7 @@ export namespace Prisma {
     reorderLevel?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inventoryMovements?: InventoryMovementUpdateManyWithoutMedicationNestedInput
   }
 
   export type MedicationUncheckedUpdateWithoutPrescriptionMedicationsInput = {
@@ -23128,6 +24988,7 @@ export namespace Prisma {
     reorderLevel?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inventoryMovements?: InventoryMovementUncheckedUpdateManyWithoutMedicationNestedInput
   }
 
   export type AuditLogCreateManyUserInput = {
@@ -23136,6 +24997,14 @@ export namespace Prisma {
     resource: string
     resourceId?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type InventoryMovementCreateManyUserInput = {
+    id?: string
+    medicationId: string
+    quantityDelta: number
+    reason: string
     createdAt?: Date | string
   }
 
@@ -23163,6 +25032,30 @@ export namespace Prisma {
     resource?: StringFieldUpdateOperationsInput | string
     resourceId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InventoryMovementUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    medication?: MedicationUpdateOneRequiredWithoutInventoryMovementsNestedInput
+  }
+
+  export type InventoryMovementUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicationId?: StringFieldUpdateOperationsInput | string
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InventoryMovementUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicationId?: StringFieldUpdateOperationsInput | string
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23659,6 +25552,14 @@ export namespace Prisma {
     notes?: string | null
   }
 
+  export type InventoryMovementCreateManyMedicationInput = {
+    id?: string
+    userId?: string | null
+    quantityDelta: number
+    reason: string
+    createdAt?: Date | string
+  }
+
   export type PrescriptionMedicationUpdateWithoutMedicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     dosage?: StringFieldUpdateOperationsInput | string
@@ -23684,6 +25585,30 @@ export namespace Prisma {
     frequency?: StringFieldUpdateOperationsInput | string
     duration?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type InventoryMovementUpdateWithoutMedicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutInventoryMovementsNestedInput
+  }
+
+  export type InventoryMovementUncheckedUpdateWithoutMedicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InventoryMovementUncheckedUpdateManyWithoutMedicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    quantityDelta?: IntFieldUpdateOperationsInput | number
+    reason?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PrescriptionMedicationCreateManyPrescriptionInput = {

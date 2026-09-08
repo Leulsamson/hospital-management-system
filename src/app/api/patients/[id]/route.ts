@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Gender } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireApiSession } from "@/lib/api-auth";
+import { writeAuditLog } from "@/lib/audit";
 
 const updatePatientSchema = z.object({
   name: z.string().min(1).max(150),
@@ -87,6 +88,7 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
         department: { select: { id: true, name: true } },
       },
     });
+    await writeAuditLog({ userId: auth.session.id, action: "UPDATE", resource: "Patient", resourceId: id });
 
     return NextResponse.json({ success: true, data: updated });
   } catch (error) {
@@ -108,6 +110,7 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
     where: { id },
     data: { isActive: false },
   });
+  await writeAuditLog({ userId: auth.session.id, action: "DEACTIVATE", resource: "Patient", resourceId: id });
 
   return NextResponse.json({ success: true, message: "Patient deactivated" });
 }

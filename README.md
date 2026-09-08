@@ -132,6 +132,7 @@ Payments, inventory, and auditing
 - GET/POST /api/payments — list or create appointment payments
 - PATCH /api/payments/:id — update payment status or receipt
 - GET/PATCH /api/inventory — view stock/low-stock items or update stock
+- GET /api/inventory/:medicationId/movements — view stock movement history
 - GET /api/audit-logs — admin-only paginated audit history
 
 Utilities
@@ -481,7 +482,7 @@ Getting started
 
 - Replace generic management screens with richer field-specific forms and accessibility polish
 - Add automated API integration and authorization tests
-- Add distributed rate limiting, CSRF review, monitoring, payment-provider integration, and pharmacy dispensing history
+- Add distributed rate limiting, CSRF review, monitoring, payment-provider integration, and pharmacy dispensing/fulfilment workflow
 - Add role-based UI pages for each user type and per-role dashboards
 - Improve error reporting and monitoring (Sentry, logs)
 - Harden authentication/session handling (rotating secrets, refresh tokens) for production

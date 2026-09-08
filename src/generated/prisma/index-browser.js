@@ -225,6 +225,15 @@ exports.Prisma.MedicationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.InventoryMovementScalarFieldEnum = {
+  id: 'id',
+  medicationId: 'medicationId',
+  userId: 'userId',
+  quantityDelta: 'quantityDelta',
+  reason: 'reason',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.AuditLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -332,6 +341,7 @@ exports.Prisma.ModelName = {
   Payment: 'Payment',
   MedicalRecord: 'MedicalRecord',
   Medication: 'Medication',
+  InventoryMovement: 'InventoryMovement',
   AuditLog: 'AuditLog',
   Prescription: 'Prescription',
   PrescriptionMedication: 'PrescriptionMedication'

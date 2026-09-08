@@ -62,6 +62,7 @@ model User {
   patient Patient?
   nurse   Nurse?
   auditLogs AuditLog[]
+  inventoryMovements InventoryMovement[]
 }
 
 model Nurse {
@@ -194,6 +195,21 @@ model Medication {
   updatedAt   DateTime @updatedAt
 
   prescriptionMedications PrescriptionMedication[]
+  inventoryMovements       InventoryMovement[]
+}
+
+model InventoryMovement {
+  id           String   @id @default(uuid())
+  medicationId String
+  userId       String?
+  quantityDelta Int
+  reason       String
+  createdAt    DateTime @default(now())
+
+  medication Medication @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  user       User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([medicationId, createdAt])
 }
 
 model AuditLog {

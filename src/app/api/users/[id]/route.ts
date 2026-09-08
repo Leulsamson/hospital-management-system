@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireApiSession } from "@/lib/api-auth";
 import { hashPassword } from "@/lib/password";
+import { writeAuditLog } from "@/lib/audit";
 
 const updateSchema = z.object({
   role: z.nativeEnum(Role).optional(),
@@ -28,5 +29,6 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
     },
     select: { id: true, email: true, role: true, isActive: true, updatedAt: true },
   });
+  await writeAuditLog({ userId: auth.session.id, action: "UPDATE", resource: "User", resourceId: id, metadata: { role: parsed.data.role, isActive: parsed.data.isActive, passwordChanged: Boolean(parsed.data.password) } });
   return NextResponse.json({ success: true, data });
 }
