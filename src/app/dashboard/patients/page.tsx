@@ -33,7 +33,10 @@ export default async function PatientsPage() {
         <PatientsTable
           initialResult={{
             success: true,
-            data,
+            data: data.map((p) => ({
+              ...p,
+              createdAt: p.createdAt.toISOString(),
+            })),
             departments,
             meta: {
               total,

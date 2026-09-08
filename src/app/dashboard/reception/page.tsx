@@ -19,7 +19,7 @@ export default async function ReceptionDashboardPage() {
       prisma.appointment.count({
         where: { appointmentDate: { gte: now, lte: nextTwoDays } },
       }),
-      prisma.appointment.count({ where: { status: "CONFIRMED" } }),
+      prisma.appointment.count({ where: { status: "SCHEDULED" } }),
       prisma.appointment.findMany({
         where: {
           appointmentDate: { gte: todayStart, lte: todayEnd },
@@ -64,7 +64,10 @@ export default async function ReceptionDashboardPage() {
           </article>
         </section>
 
-        <TodayAppointments appointments={todayAppointments} />
+        <TodayAppointments appointments={todayAppointments.map(a => ({
+          ...a,
+          appointmentDate: a.appointmentDate.toISOString(),
+        }))} />
       </div>
     </main>
   );

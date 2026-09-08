@@ -212,8 +212,7 @@ export default function AppointmentsTable({
                       <td className="px-4 py-3">
                         <div className="flex flex-wrap gap-2">
                           
-                          {appointment.status === "SCHEDULED" ||
-                          appointment.status === "CONFIRMED" ? (
+                          {appointment.status === "SCHEDULED" ? (
                             <button
                               type="button"
                               onClick={() => cancelAppointment(appointment.id)}

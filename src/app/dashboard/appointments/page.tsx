@@ -49,7 +49,7 @@ export default async function AppointmentsPage() {
       where: {
         ...patientScope,
         appointmentDate: { gte: todayStart, lte: todayEnd },
-        status: { in: ["SCHEDULED", "CONFIRMED"] },
+        status: { in: ["SCHEDULED"] },
       },
       include: {
         patient: { select: { name: true } },
@@ -73,7 +73,10 @@ export default async function AppointmentsPage() {
           </p>
         </header>
 
-        <TodayAppointments appointments={todayAppointments} />
+        <TodayAppointments appointments={todayAppointments.map(a => ({
+          ...a,
+          appointmentDate: a.appointmentDate.toISOString(),
+        }))} />
 
         <AppointmentsTable
           canManage={canManage}

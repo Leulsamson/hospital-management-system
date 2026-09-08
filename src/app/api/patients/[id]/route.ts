@@ -16,6 +16,10 @@ const updatePatientSchema = z.object({
 
 export async function GET(_request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
+  const auth = await requireApiSession(_request, ["ADMIN", "RECEPTIONIST", "DOCTOR", "NURSE", "PATIENT"]);
+  if (!auth.ok) {
+    return auth.response;
+  }
 
   const patient = await prisma.patient.findUnique({
     where: { id },
@@ -41,6 +45,10 @@ export async function GET(_request: NextRequest, context: { params: Promise<{ id
 
   if (!patient) {
     return NextResponse.json({ success: false, message: "Patient not found" }, { status: 404 });
+  }
+
+  if (auth.session.role === "PATIENT" && patient.userId !== auth.session.id) {
+    return NextResponse.json({ success: false, message: "Forbidden" }, { status: 403 });
   }
 
   return NextResponse.json({ success: true, data: patient });

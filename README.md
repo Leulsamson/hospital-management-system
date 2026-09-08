@@ -43,25 +43,24 @@ Intended users: hospital administrators, receptionists, doctors, nurses and pati
 
 This repository is under development. The current focus is on backend APIs and data-model alignment (Prisma). The implemented and partially implemented areas are documented below.
 
-Current active development phase: Phase 5 — Appointment Management (backend implemented and being integrated with the rest of the codebase).
+Current active development phase: Phase 8–13 integration. Phases 5–7 backend workflows are implemented; clinical APIs and administrative metrics are available, while their UI and automated tests remain in progress.
 
 Implemented (verified in source):
 - Authentication (register / login / session) with JWT session cookie
-- Patient management API (list, create)
+- Patient management API (list, create, update, detail, deactivate)
 - Doctor management API (list, create, update, deactivate)
 - Department management API (list, create, update, deactivate)
 - Appointment APIs (list, create, get/update/delete by id)
 - Appointment support endpoints: options (departments/doctors/patients) and availability (time slots)
-- Prisma schema with models for User, Patient, Doctor, Department, Appointment, MedicalRecord, Prescription, Medication, etc.
+- Medical-record, medication, prescription, user-management, and dashboard metrics APIs
 
 Partially implemented / In progress:
-- Full codebase type alignment with the current Prisma schema (there are ongoing edits to align UUID/string ids and unified `name` field across code)
-- UI pages and components are present but may still rely on some older shapes or need integration work
+- Dedicated clinical and user-management UI screens remain
+- Automated tests, analytics visualization, and production hardening remain
 
 Planned (not implemented in code):
-- Full MedicalRecords CRUD API and UI
-- Prescription & medication management APIs and UI
-- Complete role-based dashboard pages and role-specific features
+- Clinical and user-management UI
+- Automated API/security tests and production hardening
 
 
 ## Main features (implemented)
@@ -78,6 +77,8 @@ Patient management
 - GET /api/patients — list patients with search, gender filter, department filter, isActive filter, pagination
 - POST /api/patients — create a patient (creates a linked User record)
 - GET /api/patients/:id — fetch a patient by id (details)
+- PUT /api/patients/:id — update patient information and active state
+- DELETE /api/patients/:id — soft-deactivate a patient
 
 Doctor management
 - GET /api/doctors — list doctors with search, department filter, isActive filter, pagination
@@ -102,6 +103,30 @@ Appointments
 - DELETE /api/appointments/:id — cancel an appointment (status => CANCELLED)
 - GET /api/appointments/options — returns active departments, doctors, patients for use in booking UIs
 - GET /api/appointments/availability — returns available time slots for a doctor on a date (conflict-aware)
+
+Medical records
+- GET /api/medical-records — authenticated search/filter/paginated records; patients see only their own
+- POST /api/medical-records — create a record (ADMIN, DOCTOR, NURSE)
+- GET /api/medical-records/:id — retrieve a record with patient ownership enforcement
+- PUT /api/medical-records/:id — update clinical fields/status (ADMIN, DOCTOR)
+- PATCH /api/medical-records/:id — close a record (ADMIN, DOCTOR)
+
+Medications
+- GET /api/medications — search and paginate the medication catalogue
+- POST /api/medications — create medication (ADMIN, DOCTOR)
+- GET/PUT/DELETE /api/medications/:id — retrieve, update, or delete medication
+
+Prescriptions
+- GET /api/prescriptions — filter and paginate prescriptions with medication items
+- POST /api/prescriptions — create a prescription with dosage/frequency/duration items
+- GET /api/prescriptions/:id — retrieve a prescription with ownership protection
+- PUT /api/prescriptions/:id — update notes/status/items transactionally
+- PATCH /api/prescriptions/:id — mark COMPLETED or CANCELLED
+
+Users and dashboard
+- GET/POST /api/users — admin-only user listing/creation with role filtering
+- PUT /api/users/:id — admin-only role assignment or password update
+- GET /api/dashboard/stats — role-protected hospital summary metrics
 
 Utilities
 - GET /api/test-db — simple endpoint to test DB connectivity (returns departments)
@@ -238,7 +263,7 @@ Patients
 
 - GET /api/patients/:id
   - Purpose: Fetch patient details
-  - Auth: not restricted inside the route file (route returns 404 if not found)
+  - Auth: ADMIN, RECEPTIONIST, DOCTOR, NURSE, PATIENT; patients may only access their own profile
 
 Doctors
 - GET /api/doctors
@@ -428,24 +453,28 @@ Getting started
 
 ## Roadmap (based on repository planning and code)
 
-- ✅ Phase 1–5: Core data models and appointment management (appointments features implemented in API)
-- 🟡 Phase 6: Patient Management — API core implemented (listing/creating); further UI work and additional CRUD remain
-- 🟡 Phase 7: Doctor & Department Management — APIs implemented for doctors and departments; UI and further validation remaining
-- ⬜ Phase 8: Medical Records — planned in schema, not implemented as API routes
-- ⬜ Phase 9: Prescriptions & Medications — planned in schema, no API routes yet
-- ⬜ Phase 10+: User management, dashboards, analytics and UI polish — many pieces scaffolded but not yet complete
+- ✅ Phase 5: Appointment Management — backend workflow, booking, conflict prevention, filters, pagination, and dashboard integration
+- 🟡 Phase 6: Patient Management — CRUD/history core exists; prescription history and deeper UI remain
+- 🟡 Phase 7: Doctor & Department Management — backend complete; UI polish and lifecycle work remain
+- ✅ Phase 8: Medical Records — core authenticated CRUD/search/close APIs
+- ✅ Phase 9: Prescriptions & Medications — core APIs and nested medication workflows
+- 🟡 Phase 10: User Management — admin API exists; schema lacks User.isActive for deactivation
+- 🟡 Phase 11: Dashboard & Analytics — role dashboards and summary stats API exist; charts remain
+- 🟡 Phase 12: Frontend UI/UX — core screens exist; clinical/admin screens remain
+- 🟡 Phase 13: Security & Validation — core controls exist; testing/hardening remain
 
 
 ## Known limitations
 
-- Some parts of the codebase were recently refactored to use UUID string ids and a single `name` field; a full sweep to align all references and generated client types is in progress. This may cause TypeScript errors until fully synchronized.
 - No automated tests found.
-- Some Prisma models exist in schema but corresponding API routes are not yet implemented (MedicalRecord, Prescription, Medication CRUD).
+- The User model has no `isActive` field, so user deactivation cannot be implemented without a schema migration.
+- Clinical and user-management APIs do not yet have dedicated dashboard forms.
 
 
 ## Future improvements (ideas)
 
-- Implement full MedicalRecord and Prescription APIs and UI
+- Add dedicated MedicalRecord, Prescription, Medication, and User management UI
+- Add a User.isActive migration and account deactivation workflow
 - Add automated tests (unit + integration for API)
 - Add role-based UI pages for each user type and per-role dashboards
 - Improve error reporting and monitoring (Sentry, logs)
@@ -472,8 +501,3 @@ Recommended workflow
 ## License
 
 No license file detected in the repository. Add a LICENSE file to declare the project's license.
-
-
---
-
-If you'd like, I can now create a tidy CHANGELOG.md and a per-phase document describing Phase 5 in depth (files, technical decisions, remaining work). Which would you like next?
