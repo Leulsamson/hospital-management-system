@@ -21,21 +21,25 @@ export default function LoginPage() {
     const email = String(formData.get("email") ?? "");
     const password = String(formData.get("password") ?? "");
 
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) {
-      const result = (await response.json().catch(() => null)) as { message?: string } | null;
-      setState({ loading: false, error: result?.message ?? "Login failed" });
-      return;
+      if (!response.ok) {
+        const result = (await response.json().catch(() => null)) as { message?: string } | null;
+        setState({ loading: false, error: result?.message ?? "Unable to sign in. Check your email and password." });
+        return;
+      }
+
+      router.push("/dashboard");
+    } catch {
+      setState({ loading: false, error: "The sign-in service is unavailable. Please try again." });
     }
-
-    router.push("/dashboard");
   }
 
   return (
@@ -106,6 +110,8 @@ export default function LoginPage() {
                 placeholder="name@hospital.org"
                 required
                 autoComplete="email"
+                aria-invalid={Boolean(state.error)}
+                aria-describedby={state.error ? "login-error" : undefined}
                 className="w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm outline-none ring-[var(--brand)] transition-all focus:border-[var(--brand)] focus:ring-1"
               />
             </div>
@@ -125,13 +131,15 @@ export default function LoginPage() {
                 minLength={8}
                 required
                 autoComplete="current-password"
+                aria-invalid={Boolean(state.error)}
+                aria-describedby={state.error ? "login-error" : undefined}
                 className="w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm outline-none ring-[var(--brand)] transition-all focus:border-[var(--brand)] focus:ring-1"
               />
             </div>
 
             {state.error ? (
-              <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-100 flex items-center gap-2">
-                <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+              <div id="login-error" role="alert" aria-live="polite" className="flex items-center gap-2 rounded-lg border border-red-100 bg-red-50 p-3 text-sm text-red-700">
+                <span aria-hidden="true" className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-red-200 font-bold">!</span>
                 {state.error}
               </div>
             ) : null}

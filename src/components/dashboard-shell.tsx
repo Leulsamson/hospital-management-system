@@ -50,18 +50,18 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { label: "Dashboard", href: "/dashboard", icon: "⌂", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST", "PATIENT"] },
-  { label: "Patients", href: "/dashboard/patients", icon: "♙", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"] },
-  { label: "Doctors", href: "/dashboard/doctors", icon: "✚", roles: ["ADMIN", "DOCTOR"] },
-  { label: "Appointments", href: "/dashboard/appointments", icon: "◷", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST", "PATIENT"] },
-  { label: "Departments", href: "/dashboard/departments", icon: "▦", roles: ["ADMIN"] },
+  { label: "Dashboard", href: "/dashboard", icon: "DB", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST", "PATIENT"] },
+  { label: "Patients", href: "/dashboard/patients", icon: "PT", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"] },
+  { label: "Doctors", href: "/dashboard/doctors", icon: "DR", roles: ["ADMIN", "DOCTOR"] },
+  { label: "Appointments", href: "/dashboard/appointments", icon: "AP", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST", "PATIENT"] },
+  { label: "Departments", href: "/dashboard/departments", icon: "DP", roles: ["ADMIN"] },
   { label: "Patient intake", href: "/dashboard/patients", icon: "IN", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"] },
   { label: "Laboratory", href: "/dashboard/medical-records", icon: "LB", roles: ["ADMIN", "DOCTOR", "NURSE"] },
   { label: "Pharmacy", href: "/dashboard/medications", icon: "RX", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"] },
   { label: "Prescriptions", href: "/dashboard/prescriptions", icon: "PR", roles: ["ADMIN", "DOCTOR", "NURSE", "PATIENT"] },
   { label: "Billing", href: "/dashboard/payments", icon: "BL", roles: ["ADMIN", "RECEPTIONIST", "PATIENT"] },
   { label: "Staff directory", href: "/dashboard/users", icon: "ST", roles: ["ADMIN"] },
-  { label: "Reports", href: "/dashboard/analytics", icon: "◒", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"] },
+  { label: "Reports", href: "/dashboard/analytics", icon: "RP", roles: ["ADMIN", "DOCTOR", "NURSE", "RECEPTIONIST"] },
   { label: "Administration", href: "/dashboard/admin", icon: "AD", roles: ["ADMIN"] },
 ];
 
@@ -225,7 +225,7 @@ export default function DashboardShell({
               </article>
               <div className="space-y-6">
                 <article className="rounded-2xl border border-[var(--line)] bg-white p-5 shadow-sm"><div className="flex items-center justify-between"><h3 className="text-lg font-extrabold">Recent patients</h3><Link href="/dashboard/patients" className="text-xs font-bold text-[var(--brand)]">View all →</Link></div><div className="mt-4 space-y-3">{patients.length ? patients.map((patient) => <div key={patient.id} className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-sky-100 text-xs font-black text-sky-700">{initials(patient.name)}</span><div className="min-w-0 flex-1"><p className="truncate text-sm font-bold">{patient.name}</p><p className="text-xs text-[var(--ink-soft)]">{patient.department} · {patient.date}</p></div></div>) : <p className="py-5 text-sm text-[var(--ink-soft)]">No recent patients.</p>}</div></article>
-                <article className="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm"><div className="flex items-center gap-2"><span className="text-lg">♧</span><h3 className="font-extrabold">Notifications</h3></div><p className="mt-3 text-sm leading-6 text-amber-900">Review today&apos;s appointments and pending operational tasks before the end of your shift.</p></article>
+                <article className="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm"><div className="flex items-center gap-2"><span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full border border-amber-300 text-xs font-black text-amber-800">!</span><h3 className="font-extrabold">Shift reminders</h3></div><p className="mt-3 text-sm leading-6 text-amber-900">Review today&apos;s appointments and outstanding care tasks before the end of your shift.</p></article>
               </div>
             </section>
           </main>

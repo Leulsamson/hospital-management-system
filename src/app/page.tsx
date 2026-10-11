@@ -4,25 +4,25 @@ const departments = [
   {
     name: "Cardiology",
     description: "Heart and cardiovascular care",
-    icon: "♥",
+    icon: "CA",
     tone: "from-rose-100 to-orange-50 text-rose-700",
   },
   {
     name: "Neurology",
     description: "Brain and nervous system care",
-    icon: "✦",
+    icon: "NE",
     tone: "from-violet-100 to-indigo-50 text-violet-700",
   },
   {
     name: "Pediatrics",
     description: "Child and adolescent care",
-    icon: "✚",
+    icon: "PE",
     tone: "from-sky-100 to-cyan-50 text-sky-700",
   },
   {
     name: "Orthopedics",
     description: "Bone and joint care",
-    icon: "⌁",
+    icon: "OR",
     tone: "from-amber-100 to-yellow-50 text-amber-700",
   },
 ];
@@ -230,15 +230,15 @@ export default function Page() {
           </div>
           <div className="mt-10 flex flex-col gap-5 border-y border-white/10 py-6 text-sm md:flex-row md:items-center md:justify-between">
             <a href="mailto:hospital@example.com" className="flex items-center gap-3 transition hover:text-teal-300">
-              <span className="text-lg" aria-hidden="true">📧</span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-teal-300">Email</span>
               <span>hospital@example.com</span>
             </a>
             <span className="flex items-center gap-3">
-              <span className="text-lg" aria-hidden="true">📍</span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-teal-300">Visit</span>
               <span>Addis Ababa, Ethiopia</span>
             </span>
             <a href="tel:+251000000000" className="flex items-center gap-3 transition hover:text-teal-300">
-              <span className="text-lg" aria-hidden="true">☎</span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-teal-300">Call</span>
               <span>+251 XXX XXX XXX</span>
             </a>
           </div>

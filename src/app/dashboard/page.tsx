@@ -24,10 +24,9 @@ export default async function DashboardPage() {
   const todayEnd = new Date(now);
   todayEnd.setHours(23, 59, 59, 999);
 
-  const [patients, doctors, appointments, todayAppointments, admittedPatients, revenue, recentAppointments, recentPatients] = await Promise.all([
+  const [patients, doctors, todayAppointments, admittedPatients, revenue, recentAppointments, recentPatients] = await Promise.all([
     prisma.patient.count({ where: { isActive: true } }),
     prisma.doctor.count({ where: { isActive: true } }),
-    prisma.appointment.count(),
     prisma.appointment.count({
       where: { appointmentDate: { gte: todayStart, lte: todayEnd }, status: "SCHEDULED" },
     }),
@@ -49,12 +48,12 @@ export default async function DashboardPage() {
     <DashboardShell
       user={session}
       stats={[
-        { label: "Total Patients", value: patients, detail: "Active records", icon: "♙", tone: "bg-teal-50 text-teal-700" },
-        { label: "Today's Appointments", value: todayAppointments, detail: "Scheduled today", icon: "◷", tone: "bg-sky-50 text-sky-700" },
-        { label: "Available Doctors", value: doctors, detail: "Active clinicians", icon: "✚", tone: "bg-violet-50 text-violet-700" },
-        { label: "Admitted Patients", value: admittedPatients, detail: "Admissions module pending", icon: "⌑", tone: "bg-amber-50 text-amber-700" },
-        { label: "Revenue", value: `$${(revenue._sum.amount ?? 0).toLocaleString()}`, detail: "Completed payments", icon: "▣", tone: "bg-emerald-50 text-emerald-700" },
-        { label: "Pending Lab Tests", value: "—", detail: "Laboratory module pending", icon: "⚗", tone: "bg-rose-50 text-rose-700" },
+        { label: "Total Patients", value: patients, detail: "Active records", icon: "PT", tone: "bg-teal-50 text-teal-700" },
+        { label: "Today's Appointments", value: todayAppointments, detail: "Scheduled today", icon: "AP", tone: "bg-sky-50 text-sky-700" },
+        { label: "Available Doctors", value: doctors, detail: "Active clinicians", icon: "DR", tone: "bg-violet-50 text-violet-700" },
+        { label: "Admitted Patients", value: admittedPatients, detail: "Admissions tracking", icon: "IN", tone: "bg-amber-50 text-amber-700" },
+        { label: "Revenue", value: `$${(revenue._sum.amount ?? 0).toLocaleString()}`, detail: "Completed payments", icon: "BL", tone: "bg-emerald-50 text-emerald-700" },
+        { label: "Pending Lab Tests", value: "—", detail: "Laboratory queue", icon: "LB", tone: "bg-rose-50 text-rose-700" },
       ]}
       appointments={recentAppointments.map((appointment) => ({
         id: appointment.id,
