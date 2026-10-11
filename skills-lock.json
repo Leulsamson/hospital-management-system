@@ -1,6 +1,30 @@
 {
   "version": 1,
   "skills": {
+    "deploy-to-vercel": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/deploy-to-vercel/SKILL.md",
+      "computedHash": "3a0481591523c55ecfe2569b6b28b2dcbfa3742367667697219d29170981ad53"
+    },
+    "design-interface": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/design-interface/SKILL.md",
+      "computedHash": "4cbe2e29eb2fc03ee5e942888881d27dea71bb2e0ff7b7670df1aba59b6e627f"
+    },
+    "engineer-react": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineer-react/SKILL.md",
+      "computedHash": "3b49c89d63c0bc44ddd9611aaf0c9bac2617fcd0bd3a923004badeaf9653b6f5"
+    },
+    "engineer-react-native": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineer-react-native/SKILL.md",
+      "computedHash": "d8a6eff5bc20f0161adb4293dc53d78acec79ff3c8a8959d4bb6192ec14478e8"
+    },
     "prisma-cli": {
       "source": "prisma/skills",
       "sourceType": "github",
@@ -54,6 +78,90 @@
       "sourceType": "github",
       "skillPath": "prisma-upgrade-v7/SKILL.md",
       "computedHash": "dcc6c71adca6b22f37c5bda5ac7fd63c3bb59495596a22e06a29c7c85371558f"
+    },
+    "review-interface": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-interface/SKILL.md",
+      "computedHash": "6b5fab08ba4c97ac9cb62e093318eab7ff0a1deb5ab332fc26b2da53d32c0248"
+    },
+    "review-react": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-react/SKILL.md",
+      "computedHash": "c82aceb9b395f1cfc1662d6853bcef22f2ae9976abcbf4e52ab0f8e80dc7513f"
+    },
+    "review-react-native": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-react-native/SKILL.md",
+      "computedHash": "1b4149dc40f5fc5781eaf3a0a106b19ea588d6fa95e8dd4963ce1e75ab97183f"
+    },
+    "review-security": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-security/SKILL.md",
+      "computedHash": "dd12b9a526bd451b51f8cb16d80ef021dc313f3f9bf61509b9e767d0dff3e718"
+    },
+    "secure-software": {
+      "source": "suleimanodetoro/skills",
+      "sourceType": "github",
+      "skillPath": "skills/secure-software/SKILL.md",
+      "computedHash": "5c9f821540cbd57de07fe205b431cb6df84c9900dd4acfdc1ce1b75acf696339"
+    },
+    "setup-matt-pocock-skills": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+      "computedHash": "a45163cba56f72f5f224c46557c047d51547147a29e383e5a769ec39eecd1188"
+    },
+    "vercel-cli-with-tokens": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/vercel-cli-with-tokens/SKILL.md",
+      "computedHash": "d3ad6e1d6278a4df322ee5bf49211f921f4aaea1148fb127b4e928de04b39fef"
+    },
+    "vercel-composition-patterns": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/composition-patterns/SKILL.md",
+      "computedHash": "10eb4ec94577b79ae98c63ce3e7f35f8a6a06436a4011bff083b397de6960eeb"
+    },
+    "vercel-optimize": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/vercel-optimize/SKILL.md",
+      "computedHash": "fb87d3a135fef30748f772200a9f161f780b5a16830e8e70a3a126195cb16963"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "6b526d013e28073246a36f99b529bc43745d30832ecfa8217b359c34f260ca6b"
+    },
+    "vercel-react-native-skills": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-native-skills/SKILL.md",
+      "computedHash": "a804b4e848059822638c390359976f7021380bcefb1469d473aa4e9202c15ecb"
+    },
+    "vercel-react-view-transitions": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-view-transitions/SKILL.md",
+      "computedHash": "12f8e118b8ca5fa45e3f0b56c269fb2e35251b705d2320b26b0727a0f58adefc"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "d8e7d3afe37dcc8a97b99ffb5afdb4d0919ae0092ea8b68f44eb201f035e33ac"
+    },
+    "writing-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/writing-guidelines/SKILL.md",
+      "computedHash": "9c221f46dca7bdf94af9c27ce54a7b4ea323c590333f8bc0a55c65254c646584"
     }
   }
 }

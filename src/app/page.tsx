@@ -1,253 +1,250 @@
-import React from "react";
 import Link from "next/link";
+
+const departments = [
+  {
+    name: "Cardiology",
+    description: "Heart and cardiovascular care",
+    icon: "♥",
+    tone: "from-rose-100 to-orange-50 text-rose-700",
+  },
+  {
+    name: "Neurology",
+    description: "Brain and nervous system care",
+    icon: "✦",
+    tone: "from-violet-100 to-indigo-50 text-violet-700",
+  },
+  {
+    name: "Pediatrics",
+    description: "Child and adolescent care",
+    icon: "✚",
+    tone: "from-sky-100 to-cyan-50 text-sky-700",
+  },
+  {
+    name: "Orthopedics",
+    description: "Bone and joint care",
+    icon: "⌁",
+    tone: "from-amber-100 to-yellow-50 text-amber-700",
+  },
+];
+
+const doctors = [
+  {
+    name: "Marta Hayle",
+    specialty: "Cardiologist",
+    image:
+      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=85",
+  },
+  {
+    name: "Natan Kebede",
+    specialty: "Neurologist",
+    image:
+      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=85",
+  },
+];
+
+const highlights = [
+  {
+    number: "01",
+    title: "Coordinated care",
+    description: "Doctors, nurses, receptionists, and patients stay connected around one care journey.",
+  },
+  {
+    number: "02",
+    title: "Trusted records",
+    description: "Appointments, medical records, prescriptions, and patient history stay organized.",
+  },
+  {
+    number: "03",
+    title: "Human-first service",
+    description: "A calmer, clearer experience for every person who enters our hospital.",
+  },
+];
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-[var(--bg)] flex flex-col font-sans">
-      {/* Navigation */}
-      <nav className="w-full border-b border-[var(--line)] bg-[var(--surface)] sticky top-0 z-50">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--brand)] text-white font-bold text-xl leading-none shadow-md">
-              C
-            </div>
-            <span className="text-xl font-bold tracking-tight text-[var(--ink)]">
-              CareFlow{" "}
-              <span className="font-medium text-[var(--ink-soft)]">HMS</span>
+    <div className="min-h-screen overflow-hidden bg-[#f7faf8] text-[var(--ink)]">
+      <header className="sticky top-0 z-50 border-b border-white/70 bg-[#f7faf8]/90 backdrop-blur-xl">
+        <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-5 sm:px-8">
+          <Link href="/" className="flex items-center gap-3" aria-label="CareFlow home">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--brand)] text-xl font-bold text-white shadow-lg shadow-teal-900/15">
+              +
             </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className="rounded-full bg-[var(--brand)] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-teal-700 hover:shadow"
-            >
-              Staff Portal Login
-            </Link>
-          </div>
+            <span>
+              <span className="block text-lg font-extrabold tracking-tight">CareFlow</span>
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--ink-soft)]">
+                Hospital management
+              </span>
+            </span>
+          </Link>
+          <Link
+            href="/login"
+            className="rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/10 transition hover:-translate-y-0.5 hover:bg-[var(--brand)]"
+          >
+            Login
+          </Link>
         </div>
-      </nav>
+      </header>
 
-      {/* Main Content */}
-      <main className="flex-1 max-w-7xl mx-auto px-6 py-12 lg:py-20 w-full flex flex-col gap-16">
-        {/* Hero Section */}
-        <section className="text-center max-w-3xl mx-auto fade-slide-up">
-          <div className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold text-teal-800 mb-6 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-            </span>
-            System Online & Connected
+      <main>
+        <section className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
+          <div className="relative z-10 fade-slide-up">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[var(--brand)] shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 pulse-ring" />
+              Caring for every chapter
+            </div>
+            <h1 className="max-w-2xl text-5xl font-black leading-[0.98] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
+              Better care starts with{" "}
+              <span className="text-[var(--brand)]">better connection.</span>
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-[var(--ink-soft)]">
+              Welcome to CareFlow, a connected hospital experience that brings people,
+              appointments, and clinical information together with clarity.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <Link
+                href="/login"
+                className="rounded-full bg-[var(--brand)] px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-teal-900/15 transition hover:-translate-y-0.5 hover:bg-teal-800"
+              >
+                Access your portal <span aria-hidden="true">→</span>
+              </Link>
+              <a
+                href="#departments"
+                className="rounded-full border border-[var(--line)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--ink)] transition hover:border-[var(--brand)] hover:text-[var(--brand)]"
+              >
+                Explore services
+              </a>
+            </div>
+            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-[var(--ink-soft)]">
+              <span><strong className="text-[var(--brand)]">04</strong> care departments</span>
+              <span><strong className="text-[var(--brand)]">01</strong> connected workspace</span>
+            </div>
           </div>
-          <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-[var(--ink)] !leading-tight">
-            Enterprise Grade <br />
-            <span className="text-[var(--brand)]">Medical Operations</span>
-          </h1>
-          <p className="mt-6 text-lg text-[var(--ink-soft)] leading-relaxed max-w-2xl mx-auto">
-            Experience seamless hospital management with CareFlow. Real-time patient
-            tracking, schedule optimization, and comprehensive medical records—all
-            in one secure platform.
-          </p>
+
+          <div className="relative min-h-[430px] fade-slide-up fade-slide-delay-1">
+            <div className="absolute -right-16 -top-12 h-72 w-72 rounded-full bg-teal-200/40 blur-3xl" />
+            <div className="relative h-[430px] overflow-hidden rounded-[2.5rem] bg-slate-200 shadow-2xl shadow-slate-900/15">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(15, 23, 42, 0.18)), url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=90')",
+                }}
+                role="img"
+                aria-label="Modern hospital exterior and care facility"
+              />
+              <div className="absolute bottom-5 left-5 right-5 rounded-3xl border border-white/30 bg-slate-950/55 p-5 text-white backdrop-blur-md">
+                <div className="flex items-end justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">
+                      Our hospital
+                    </p>
+                    <p className="mt-1 text-xl font-bold">Care that moves with you</p>
+                  </div>
+                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">Connected care</span>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -left-5 rounded-2xl border border-white bg-white p-4 shadow-xl sm:-left-8">
+              <p className="text-xs font-bold uppercase tracking-widest text-[var(--ink-soft)]">Patient promise</p>
+              <p className="mt-1 text-sm font-bold text-[var(--ink)]">Every visit matters.</p>
+            </div>
+          </div>
         </section>
 
-        {/* Feature Previews Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4 fade-slide-up fade-slide-delay-1">
-          {/* Card 1: Hospital Statistics Preview */}
-          <div className="card-soft rounded-2xl p-6 flex flex-col group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-[var(--ink-soft)]">
-                Facility Stats
-              </h3>
-              <div className="h-8 w-8 rounded-full bg-[var(--surface-muted)] flex items-center justify-center group-hover:bg-teal-100 transition-colors">
-                <svg
-                  className="w-4 h-4 text-[var(--brand)]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
+        <section id="departments" className="bg-white px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--brand)]">Our services</p>
+                <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Care for what matters most</h2>
               </div>
+              <p className="max-w-md text-sm leading-6 text-[var(--ink-soft)]">
+                Our connected departments work together to support patients through every stage of care.
+              </p>
             </div>
-
-            <div className="flex-1 space-y-4">
-              <div className="flex justify-between items-end border-b border-[var(--line)] pb-3">
-                <span className="text-[var(--ink-soft)] text-sm">
-                  Active Patients
-                </span>
-                <span className="text-2xl font-bold text-[var(--ink)]">
-                  1,492
-                </span>
-              </div>
-              <div className="flex justify-between items-end border-b border-[var(--line)] pb-3">
-                <span className="text-[var(--ink-soft)] text-sm">
-                  Available Beds
-                </span>
-                <span className="text-2xl font-bold text-[var(--ink)]">42</span>
-              </div>
-              <div className="flex justify-between items-end pb-2">
-                <span className="text-[var(--ink-soft)] text-sm">
-                  On-duty Staff
-                </span>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl font-bold text-[var(--ink)]">118</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: Appointment Preview */}
-          <div className="card-soft rounded-2xl p-6 flex flex-col group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ring-1 ring-[var(--brand)] shadow-[0_0_20px_rgba(15,118,110,0.1)]">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-[var(--ink-soft)]">
-                Live Schedule
-              </h3>
-              <div className="flex gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-red-400"></span>
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                <span className="w-2 h-2 rounded-full bg-green-400"></span>
-              </div>
-            </div>
-
-            <div className="flex-1 space-y-3">
-              {[
-                {
-                  time: "09:00 AM",
-                  name: "Sarah Jenkins",
-                  dept: "Cardiology",
-                  status: "In Progress",
-                },
-                {
-                  time: "09:30 AM",
-                  name: "Michael Chang",
-                  dept: "Neurology",
-                  status: "Waiting",
-                },
-                {
-                  time: "10:00 AM",
-                  name: "Emma Robert",
-                  dept: "Orthopedics",
-                  status: "Scheduled",
-                },
-              ].map((appt, i) => (
-                <div
-                  key={i}
-                  className={`p-3 rounded-xl border ${
-                    i === 0
-                      ? "bg-teal-50 border-teal-100"
-                      : "bg-[var(--surface)] border-[var(--line)]"
-                  } transition-colors`}
-                >
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs font-semibold text-[var(--ink)]">
-                      {appt.time}
-                    </span>
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        i === 0
-                          ? "bg-teal-100 text-teal-800"
-                          : i === 1
-                          ? "bg-amber-100 text-amber-800"
-                          : "bg-gray-100 text-gray-600"
-                      }`}
-                    >
-                      {appt.status}
-                    </span>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {departments.map((department) => (
+                <article key={department.name} className="group rounded-3xl border border-[var(--line)] bg-[#fbfdfb] p-5 transition hover:-translate-y-1 hover:border-teal-200 hover:shadow-xl hover:shadow-teal-900/5">
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-xl font-black ${department.tone}`}>
+                    {department.icon}
                   </div>
-                  <div className="flex justify-between items-baseline">
-                    <span className="text-sm font-medium text-[var(--ink)]">
-                      {appt.name}
-                    </span>
-                    <span className="text-xs text-[var(--ink-soft)]">
-                      {appt.dept}
-                    </span>
-                  </div>
-                </div>
+                  <h3 className="mt-6 font-bold">{department.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[var(--ink-soft)]">{department.description}</p>
+                  <span className="mt-5 inline-block text-sm font-bold text-[var(--brand)] transition group-hover:translate-x-1">Learn more →</span>
+                </article>
               ))}
             </div>
           </div>
+        </section>
 
-          {/* Card 3: Dashboard Preview */}
-          <div className="card-soft rounded-2xl p-6 flex flex-col group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative">
-            <div className="flex items-center justify-between mb-6 relative z-10">
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-[var(--ink-soft)]">
-                Secure Access
-              </h3>
-              <div className="h-8 w-8 rounded-full bg-[var(--surface-muted)] flex items-center justify-center group-hover:bg-teal-100 transition-colors">
-                <svg
-                  className="w-4 h-4 text-[var(--brand)]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center relative z-10">
-              <div className="bg-gradient-to-br from-teal-50 to-white border border-[var(--line)] rounded-xl p-4 text-center">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-[var(--brand)] pb-1">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <h4 className="text-sm font-semibold text-[var(--ink)] mb-1">
-                  Role-Based Dashboard
-                </h4>
-                <p className="text-xs text-[var(--ink-soft)] mb-3">
-                  Admin • Doctor • Nurse • Receptionist
-                </p>
-                <Link
-                  href="/login"
-                  className="inline-block w-full rounded-lg bg-[var(--ink)] px-4 py-2 text-xs font-semibold text-white transition hover:bg-gray-800"
-                >
-                  Enter System
-                </Link>
-              </div>
-            </div>
-
-            {/* Decorative background element */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[var(--brand)] opacity-[0.03] rounded-full blur-2xl group-hover:opacity-10 transition-opacity duration-500"></div>
+        <section className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--brand)]">Meet the team</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">People behind the care</h2>
+            <p className="mt-5 max-w-md leading-7 text-[var(--ink-soft)]">
+              Our clinical teams combine expertise with a personal approach, supported by a shared view of every patient journey.
+            </p>
+            <Link href="/login" className="mt-7 inline-block text-sm font-bold text-[var(--brand)] hover:underline">
+              Sign in to view your care team →
+            </Link>
           </div>
-        </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {doctors.map((doctor) => (
+              <article key={doctor.name} className="overflow-hidden rounded-3xl border border-[var(--line)] bg-white shadow-sm">
+                <div className="h-64 bg-slate-200 bg-cover bg-center" style={{ backgroundImage: `url('${doctor.image}')` }} role="img" aria-label={`${doctor.name}, ${doctor.specialty}`} />
+                <div className="p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[var(--brand)]">{doctor.specialty}</p>
+                  <h3 className="mt-2 text-xl font-extrabold">{doctor.name}</h3>
+                  <p className="mt-2 text-sm text-[var(--ink-soft)]">Here to listen, guide, and care.</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-[var(--ink)] px-5 py-20 text-white sm:px-8">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-300">What we are building</p>
+            <h2 className="mt-3 max-w-2xl text-3xl font-black tracking-tight sm:text-4xl">A more thoughtful hospital experience.</h2>
+            <div className="mt-12 grid gap-8 md:grid-cols-3">
+              {highlights.map((highlight) => (
+                <article key={highlight.number} className="border-t border-white/20 pt-5">
+                  <span className="text-sm font-bold text-teal-300">{highlight.number}</span>
+                  <h3 className="mt-5 text-xl font-bold">{highlight.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-300">{highlight.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full border-t border-[var(--line)] py-8 mt-auto bg-white/50">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 opacity-80">
-            <div className="h-5 w-5 rounded bg-[var(--brand)] text-white text-[10px] font-bold flex items-center justify-center">
-              C
+      <footer className="mt-auto w-full bg-[#102327] px-5 py-12 text-slate-300 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div>
+            <div className="flex items-center gap-3 text-white">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand)] text-lg font-bold">+</span>
+              <span className="text-lg font-extrabold">CareFlow</span>
             </div>
-            <span className="text-xs font-semibold text-[var(--ink)]">
-              CareFlow Technology © {new Date().getFullYear()}
-            </span>
+            <p className="mt-5 max-w-xs text-sm leading-6">Connected hospital management for better everyday care.</p>
           </div>
-          <div className="flex gap-6 text-xs font-medium text-[var(--ink-soft)]">
-            <span className="hover:text-[var(--brand)] cursor-pointer transition-colors">
-              Privacy Policy
+          <div className="mt-10 flex flex-col gap-5 border-y border-white/10 py-6 text-sm md:flex-row md:items-center md:justify-between">
+            <a href="mailto:hospital@example.com" className="flex items-center gap-3 transition hover:text-teal-300">
+              <span className="text-lg" aria-hidden="true">📧</span>
+              <span>hospital@example.com</span>
+            </a>
+            <span className="flex items-center gap-3">
+              <span className="text-lg" aria-hidden="true">📍</span>
+              <span>Addis Ababa, Ethiopia</span>
             </span>
-            <span className="hover:text-[var(--brand)] cursor-pointer transition-colors">
-              Terms of Service
-            </span>
-            <span className="hover:text-[var(--brand)] cursor-pointer transition-colors">
-              Support
-            </span>
+            <a href="tel:+251000000000" className="flex items-center gap-3 transition hover:text-teal-300">
+              <span className="text-lg" aria-hidden="true">☎</span>
+              <span>+251 XXX XXX XXX</span>
+            </a>
           </div>
+        </div>
+        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-6 text-xs text-slate-500">
+          © 2026 Hospital Management System. All rights reserved.
         </div>
       </footer>
     </div>

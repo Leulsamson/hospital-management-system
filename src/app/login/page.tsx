@@ -47,29 +47,41 @@ export default function LoginPage() {
         <span className="text-sm font-semibold text-[var(--ink)]">Back to Home</span>
       </Link>
 
-      <section className="card-soft fade-slide-up grid w-full max-w-4xl overflow-hidden rounded-3xl lg:grid-cols-[1fr_1fr] bg-white shadow-2xl">
-        <div className="bg-gradient-to-br from-teal-800 to-teal-900 p-10 md:p-12 flex flex-col justify-between text-white relative overflow-hidden">
-          {/* Background decoration */}
-          <div className="absolute -top-24 -left-24 w-64 h-64 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
-          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-teal-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+      <section className="card-soft fade-slide-up grid w-full max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative flex min-h-[520px] flex-col justify-between overflow-hidden bg-[#103d3d] p-8 text-white md:p-12">
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-45"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, rgba(9, 55, 54, 0.85), rgba(16, 61, 61, 0.48)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85')",
+            }}
+            role="img"
+            aria-label="Clinician speaking with a patient in a bright consultation room"
+          />
+          <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-teal-300/20 blur-3xl" />
           
           <div className="relative z-10">
-            <div className="flex flex-col gap-1 mb-10">
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[var(--brand)] font-bold text-3xl leading-none shadow-lg mb-4">
-                C
+            <div className="mb-12 flex flex-col gap-1">
+              <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-2xl font-black leading-none text-[var(--brand)] shadow-lg">
+                +
               </span>
-              <h2 className="text-3xl font-bold tracking-tight">CareFlow HMS</h2>
-              <p className="text-teal-100 font-medium">Enterprise Medical Operations</p>
+              <h2 className="text-3xl font-black tracking-tight">CareFlow</h2>
+              <p className="font-medium text-teal-100">Hospital management workspace</p>
             </div>
             
-            <div className="space-y-6 mt-12">
+            <div className="max-w-sm space-y-5">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">Welcome back</p>
+              <h3 className="text-3xl font-black leading-tight md:text-4xl">Make every patient visit feel considered.</h3>
+              <p className="text-sm leading-6 text-teal-50/90">Coordinate appointments, patient records, prescriptions, and follow-up care from one clear workspace.</p>
+            </div>
+            <div className="mt-9 grid gap-3 text-sm text-teal-50">
               <div className="flex items-start gap-4">
-                <div className="h-6 w-6 mt-1 rounded bg-teal-700/50 flex items-center justify-center flex-shrink-0">✓</div>
-                <p className="text-sm text-teal-50 leading-relaxed">Secure role-based access for Admins, Doctors, Nurses, and Receptionists.</p>
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-teal-100">✓</span>
+                <p>Role-based access for hospital teams and patients.</p>
               </div>
               <div className="flex items-start gap-4">
-                <div className="h-6 w-6 mt-1 rounded bg-teal-700/50 flex items-center justify-center flex-shrink-0">✓</div>
-                <p className="text-sm text-teal-50 leading-relaxed">End-to-end encryption for all medical records and payment screenshots.</p>
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/15 text-teal-100">✓</span>
+                <p>One dependable place for the day&apos;s care work.</p>
               </div>
             </div>
           </div>
@@ -77,20 +89,21 @@ export default function LoginPage() {
 
         <div className="p-10 md:p-12 flex flex-col justify-center relative">
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-[var(--ink)] mb-1">Staff Portal Login</h1>
-            <p className="text-sm text-[var(--ink-soft)]">Enter your credentials to access the system.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand)]">Secure sign in</p>
+            <h1 className="mt-2 text-2xl font-black text-[var(--ink)]">Access your care workspace</h1>
+            <p className="mt-2 text-sm leading-6 text-[var(--ink-soft)]">Use your hospital email and password to continue.</p>
           </div>
 
           <form onSubmit={onSubmit} className="grid gap-5">
             <div>
               <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)] mb-1.5">
-                Work Email
+                Hospital email
               </label>
               <input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="doctor@careflow.com"
+                placeholder="name@hospital.org"
                 required
                 autoComplete="email"
                 className="w-full rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm outline-none ring-[var(--brand)] transition-all focus:border-[var(--brand)] focus:ring-1"
@@ -102,7 +115,7 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-xs font-semibold uppercase tracking-wider text-[var(--ink-soft)]">
                   Password
                 </label>
-                <a href="#" className="text-xs font-medium text-[var(--brand)] hover:underline">Forgot password?</a>
+                <span className="text-xs font-medium text-[var(--ink-soft)]">Keep your password private</span>
               </div>
               <input
                 id="password"
@@ -136,7 +149,7 @@ export default function LoginPage() {
                   </svg>
                   Authenticating...
                 </span>
-              ) : "Sign In &rarr;"}
+              ) : "Sign in securely →"}
             </button>
           </form>
         </div>

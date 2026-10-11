@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f3f5ef;
-  --surface: #fffdf7;
-  --surface-muted: #eef4ec;
-  --ink: #1a2a2e;
-  --ink-soft: #46606a;
-  --line: #d5e2da;
-  --brand: #0f766e;
-  --brand-accent: #f59e0b;
+  --bg: #f3f6f4;
+  --surface: #fffefa;
+  --surface-muted: #edf5f2;
+  --ink: #183238;
+  --ink-soft: #587078;
+  --line: #d7e4df;
+  --brand: #0b766e;
+  --brand-accent: #e4a43a;
+  --focus-ring: #5eead4;
 }
 
 * {
@@ -24,9 +25,9 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 15% 10%, #e6f7ef 0%, transparent 42%),
-    radial-gradient(circle at 88% 12%, #fff0d6 0%, transparent 38%),
-    linear-gradient(180deg, #f8fbf7 0%, var(--bg) 100%);
+    radial-gradient(circle at 10% 0%, #e5f5ef 0%, transparent 34%),
+    radial-gradient(circle at 100% 14%, #fff2dc 0%, transparent 31%),
+    linear-gradient(180deg, #fafcfb 0%, var(--bg) 100%);
 }
 
 @keyframes fade-slide-up {
@@ -66,11 +67,22 @@ body {
 }
 
 .card-soft {
-  background: color-mix(in oklab, var(--surface) 95%, #ffffff);
+  background: color-mix(in oklab, var(--surface) 96%, #ffffff);
   border: 1px solid var(--line);
-  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.06);
+  box-shadow: 0 18px 40px rgba(24, 50, 56, 0.07);
 }
 
 .text-soft {
   color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

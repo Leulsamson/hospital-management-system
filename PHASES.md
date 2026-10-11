@@ -134,14 +134,16 @@ Remaining:
 
 Completed:
 
-- Public landing page with Login action.
-- Login page, dashboard shell, sidebar, cards, tables, forms, filters,
-  pagination, loading/error/empty messages in core modules.
+- Public hospital landing dashboard with Login action, hospital imagery,
+  department showcase, doctor profiles, care highlights, and contact/location
+  footer.
+- Login page, responsive authenticated dashboard shell, desktop/mobile sidebar,
+  header, metric cards, appointment/patient charts, recent activity tables,
+  notifications, quick actions, forms, filters, pagination, and
+  loading/error/empty messages in core modules.
 
 Remaining:
 
-- Medical-record, prescription, medication, and user-management screens.
-- Payment, inventory, and audit-log screens.
 - Responsive and accessibility review across every page.
 
 ## Phase 13 — Security & Validation
@@ -168,7 +170,10 @@ Remaining:
 ## Next session checklist
 
 1. Run `npx prisma generate`, `npx tsc --noEmit`, `npm test`, and `npm run build`.
-2. Apply the new migration to a database whose migration history is reconciled.
-3. Smoke-test authenticated clinical, payment, inventory, and user workflows.
-4. Add broader endpoint authorization/security integration tests.
-5. Commit and push the completed work.
+2. The local database was repaired without reset by applying the additive security/inventory SQL migrations.
+3. Prisma 7 seeding is configured through `prisma.config.ts` and `npx prisma db seed` completed successfully.
+4. Local admin login was verified at `http://localhost:3000` with the seeded demo account.
+5. Reconcile migration history before applying these additive changes to any other environment.
+6. Smoke-test authenticated clinical, payment, inventory, and user workflows.
+7. Add broader endpoint authorization/security integration tests.
+8. Commit and push the completed work.
