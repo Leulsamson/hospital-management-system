@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const departments = [
   {
@@ -124,14 +125,19 @@ export default function Page() {
             <div className="absolute -right-16 -top-12 h-72 w-72 rounded-full bg-teal-200/40 blur-3xl" />
             <div className="relative h-[430px] overflow-hidden rounded-[2.5rem] bg-slate-200 shadow-2xl shadow-slate-900/15">
               <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(15, 23, 42, 0.18)), url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=90')",
-                }}
-                role="img"
-                aria-label="Modern hospital exterior and care facility"
-              />
+                className="absolute inset-0 bg-gradient-to-br from-teal-700/10 to-slate-900/20"
+                aria-hidden="true"
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1200&q=90"
+                  alt="Modern hospital exterior and care facility"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-700/10 to-slate-900/20" aria-hidden="true" />
+              </div>
               <div className="absolute bottom-5 left-5 right-5 rounded-3xl border border-white/30 bg-slate-950/55 p-5 text-white backdrop-blur-md">
                 <div className="flex items-end justify-between gap-4">
                   <div>
@@ -191,7 +197,15 @@ export default function Page() {
           <div className="grid gap-5 sm:grid-cols-2">
             {doctors.map((doctor) => (
               <article key={doctor.name} className="overflow-hidden rounded-3xl border border-[var(--line)] bg-white shadow-sm">
-                <div className="h-64 bg-slate-200 bg-cover bg-center" style={{ backgroundImage: `url('${doctor.image}')` }} role="img" aria-label={`${doctor.name}, ${doctor.specialty}`} />
+                <div className="relative h-64 bg-slate-200">
+                  <Image
+                    src={doctor.image}
+                    alt={`${doctor.name}, ${doctor.specialty}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover object-center"
+                  />
+                </div>
                 <div className="p-5">
                   <p className="text-xs font-bold uppercase tracking-widest text-[var(--brand)]">{doctor.specialty}</p>
                   <h3 className="mt-2 text-xl font-extrabold">{doctor.name}</h3>

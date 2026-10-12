@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import type { ReactNode } from "react";
 import type { Role } from "@prisma/client";
 import LogoutButton from "@/components/logout-button";
 
@@ -40,6 +42,7 @@ type DashboardShellProps = {
   stats: StatItem[];
   appointments: AppointmentItem[];
   patients: PatientItem[];
+  children?: ReactNode;
 };
 
 type NavItem = {
@@ -87,6 +90,7 @@ export default function DashboardShell({
   stats,
   appointments,
   patients,
+  children,
 }: DashboardShellProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -160,7 +164,7 @@ export default function DashboardShell({
           </header>
 
           <main className="mx-auto max-w-[1500px] space-y-6 p-5 md:p-8">
-            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            {children ?? <><div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div>
                 <p className="text-sm font-semibold text-[var(--ink-soft)]">Today&apos;s hospital activity</p>
                 <h2 className="mt-1 text-3xl font-black tracking-tight md:text-4xl">Care team overview</h2>
@@ -172,7 +176,16 @@ export default function DashboardShell({
             </div>
 
             <section className="relative overflow-hidden rounded-[1.75rem] bg-[#164e4b] p-6 text-white shadow-xl shadow-teal-950/10 md:p-8">
-              <div className="absolute inset-y-0 right-0 hidden w-2/5 bg-cover bg-center opacity-70 md:block" style={{ backgroundImage: "linear-gradient(90deg, #164e4b 0%, rgba(22, 78, 75, 0.58) 38%, rgba(22, 78, 75, 0.12) 100%), url('https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=900&q=85')" }} role="img" aria-label="Hospital team preparing a patient care area" />
+              <div className="absolute inset-y-0 right-0 hidden w-2/5 md:block" aria-hidden="true">
+                <Image
+                  src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=900&q=85"
+                  alt="Hospital team preparing a patient care area"
+                  fill
+                  sizes="40vw"
+                  className="object-cover object-center opacity-70"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#164e4b] via-[#164e4b]/58 to-[#164e4b]/12" />
+              </div>
               <div className="relative max-w-xl">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">A clear start to every shift</p>
                 <h3 className="mt-3 text-2xl font-black tracking-tight md:text-3xl">Keep the next patient, appointment, and task in view.</h3>
@@ -227,7 +240,7 @@ export default function DashboardShell({
                 <article className="rounded-2xl border border-[var(--line)] bg-white p-5 shadow-sm"><div className="flex items-center justify-between"><h3 className="text-lg font-extrabold">Recent patients</h3><Link href="/dashboard/patients" className="text-xs font-bold text-[var(--brand)]">View all →</Link></div><div className="mt-4 space-y-3">{patients.length ? patients.map((patient) => <div key={patient.id} className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-sky-100 text-xs font-black text-sky-700">{initials(patient.name)}</span><div className="min-w-0 flex-1"><p className="truncate text-sm font-bold">{patient.name}</p><p className="text-xs text-[var(--ink-soft)]">{patient.department} · {patient.date}</p></div></div>) : <p className="py-5 text-sm text-[var(--ink-soft)]">No recent patients.</p>}</div></article>
                 <article className="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm"><div className="flex items-center gap-2"><span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full border border-amber-300 text-xs font-black text-amber-800">!</span><h3 className="font-extrabold">Shift reminders</h3></div><p className="mt-3 text-sm leading-6 text-amber-900">Review today&apos;s appointments and outstanding care tasks before the end of your shift.</p></article>
               </div>
-            </section>
+            </section></>}
           </main>
         </div>
       </div>

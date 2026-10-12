@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 type LoginState = {
   loading: boolean;
@@ -54,14 +55,18 @@ export default function LoginPage() {
       <section className="card-soft fade-slide-up grid w-full max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative flex min-h-[520px] flex-col justify-between overflow-hidden bg-[#103d3d] p-8 text-white md:p-12">
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-45"
-            style={{
-              backgroundImage:
-                "linear-gradient(135deg, rgba(9, 55, 54, 0.85), rgba(16, 61, 61, 0.48)), url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85')",
-            }}
-            role="img"
-            aria-label="Clinician speaking with a patient in a bright consultation room"
-          />
+            className="absolute inset-0 bg-gradient-to-br from-[#093736]/85 to-[#103d3d]/48 opacity-45"
+            aria-hidden="true"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=85"
+              alt="Clinician speaking with a patient in a bright consultation room"
+              fill
+              sizes="(max-width: 1024px) 100vw, 52vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#093736]/85 to-[#103d3d]/48" aria-hidden="true" />
+          </div>
           <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-teal-300/20 blur-3xl" />
           
           <div className="relative z-10">

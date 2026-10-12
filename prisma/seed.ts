@@ -11,6 +11,10 @@ if (!databaseUrl) {
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: databaseUrl }),
+  transactionOptions: {
+    maxWait: 20_000,
+    timeout: 120_000,
+  },
 });
 
 function addDays(base: Date, offsetDays: number, hour = 9, minute = 0) {
